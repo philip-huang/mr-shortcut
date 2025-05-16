@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="description" content="APEX-MR">
+    <meta name="keywords" content="Bimanual Manipulation, Multi-Robot Asynchronous Coordination, Cooperative Assembly">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Benchmarking Multi-Robot Shortcut</title>
+
+    <link
+      href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+      rel="stylesheet">
+
+    <link rel="stylesheet" href="./static/css/bulma.min.css">
+    <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+    <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+    <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+    <link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+    <link rel="stylesheet" href="./static/css/index.css">
+
+    <script
+      src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script defer src="./static/js/fontawesome.all.min.js"></script>
+    <script src="./static/js/bulma-carousel.min.js"></script>
+    <script src="./static/js/bulma-slider.min.js"></script>
+    <script src="./static/js/index.js"></script>
+
+    <link rel="icon" href="./apex.ico">
+
+    <!-- facebook -->
+    <meta property="og:site_name" content="MR-Shortcut" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Benchmarking Shortcutting Techniques for Multi-Robot Arm Motion Planning" />
+    <meta property="og:description" content="Bimanual manipulation for cooperative assembly." />
+    <meta property="og:url" content="https://intelligent-control-lab.github.io/APEX-MR/" />
+    <meta property="og:image"content="https://intelligent-control-lab.github.io/APEX-MR/static/images/preview.jpg" />
+    <meta property="og:image:secure"content="https://intelligent-control-lab.github.io/APEX-MR/static/images/preview.jpg" />
+    <!-- <meta property="og:image:width" content="1600" /> -->
+    <!-- <meta property="og:image:height" content="900" /> -->
+
+    <meta property="article:publisher" content="https://waynekyrie.github.io/" />
+
+
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <meta name="twitter:card" content="player" />
+    <meta name="twitter:title" content="Benchmarking Shortcutting Techniques for Multi-Robot Arm Motion Planning" />
+    <meta name="twitter:description" content="Bimanual manipulation for cooperative assembly." />
+    <meta name="twitter:url" content="https://intelligent-control-lab.github.io/APEX-MR/" />
+    <meta name="twitter:image" content="https://intelligent-control-lab.github.io/APEX-MR/static/images/preview.jpg" />
+
+    <style>
+      .video-container {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        border: none;
+      }
+    
+      .video-container iframe {
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        border: none;
+        border: 1px
+        solid #bbb;
+        border-radius: 10px;
+        width: 100%;
+      }
+
+      .image-grid2 {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); /* Two columns */
+        gap: 5px; /* Space between rows and columns */
+        justify-content: center;
+        align-items: center;
+      }
+      
+      .image-grid2 img {
+          width: 100%;
+          height: auto; /* Maintain aspect ratio */
+          border-radius: 10px; /* Optional: Add rounded corners */
+          object-fit: contain;
+          aspect-ratio: 16 / 9;
+      }
+
+      .image-grid2 iframe {
+        width: 100%;
+        height: 100%;
+        aspect-ratio: 16 / 9;
+        border: 1px
+        solid #bbb;
+        border-radius: 5px;
+        object-fit: contain;
+      }
+
+      .image-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr); /* Two columns */
+        gap: 5px; /* Space between rows and columns */
+        justify-content: center;
+        align-items: center;
+      }
+      
+      .image-grid img {
+          max-width: 100%;
+          height: 100%; /* Maintain aspect ratio */
+          border-radius: 5px; /* Optional: Add rounded corners */
+      }
+
+      .image-grid iframe {
+        width: 100%;
+        height: 100%;
+        aspect-ratio: 16 / 9;
+        border: 1px
+        solid #bbb;
+        border-radius: 5px;
+        object-fit: contain;
+      }
+
+    </style>
+
+  </head>
+
+
+  <body>
+
+    <section class="hero">
+      <div class="hero-body">
+        <div class="container">
+          <div class="columns is-centered">
+            <div class="column has-text-centered">
+              <h1 class="title is-1 publication-title">Benchmarking Shortcutting Techniques for Multi-Robot Arm Motion Planning</h1>
+              <div class="is-size-5 publication-authors">
+                <span class="author-block">
+                  <a href="https://philip-huang.github.io/">Philip Huang </a><sup>, 1</sup>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <a href="https://yoraish.com">Yorai Shaoul</a><sup>1</sup>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <a href="https://jiaoyangli.me/">Jiaoyang Li</a><sup>1</sup>
+                  <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <sup>1</sup>Carnegie Mellon University
+                </span>
+              </div>
+
+              <div class="column has-text-centered">
+
+                <div class="publication-links">
+
+                  <!-- arXiv Link. -->
+                  <span class="link-block">
+                    <a href="https://arxiv.org/abs/2503.15836"
+                      class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon">
+                        <i class="ai ai-arxiv"></i>
+                      </span>
+                      <span>Paper</span>
+                    </a>
+                  </span>
+
+                  <span class="link-block">
+                    <a href="https://drive.google.com/file/d/15iYndy__BhI_r0uGmHVpnUeX8OPo3lT_/preview"
+                      class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon">
+                        <i class="fab fa-youtube" aria-hidden="true"></i>
+                      </span>
+                      <span>Video</span>
+                    </a>
+                  </span>
+
+                  <span class="link-block">
+                    <a href="https://x.com/RuixuanLiu_/status/1918076448352424201"
+                      class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon">
+                        <i class="fab fa-twitter" aria-hidden="true"></i>
+                      </span>
+                      <span>X</span>
+                    </a>
+                  </span>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <div class="container">
+      <!-- Paper video. -->
+      <div id="method_video" class="columns is-centered has-text-centered">
+        <div class="column is-two-thirds">
+          <div class="video-container">
+            <iframe
+              src="https://drive.google.com/file/d/1SmA5nLjoJxbhoJsbI8TaXxLSKXDoCC0K/preview"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+
+    <section class="section">
+      <div class="container">
+        <!-- Abstract. -->
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-two-thirds">
+            <h2 class="title is-2">Abstract</h2>
+            <div class="content has-text-justified">
+              <p>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="section" id="BibTeX">
+      <div class="container content">
+        <h2 class="titile">BibTeX</h2>
+        <pre>
+          <code>
+          </code>
+        </pre>
+      </div>
+    </section>
+
+
+    <section class="section">
+      <div class="columns is-centered">
+        <div class="column is-full-width">
+          <div class="is-vcentered interpolation-panel">
+            <h2 class="title is-2" style="text-align: center;">Related Works</h2>
+            <div class="content is-centered has-text-centered">
+              This work is part of our research on <a href="http://icontrol.ri.cmu.edu/research/lego.html">Generative Assembly via Bimanual Manipulation </a> and <strong>Multi-Robot Task and Motion Planning</strong>.
+              Please explore our other works below.
+            </div>
+
+            <div class="container">
+              <div class="columns is-vcentered">
+                <!-- Image Column -->
+                <div class="column is-4">
+                  <figure class="image">
+                    <img src="./resources/lego-jiaoyang-old.gif" alt="RMA Image">
+                  </figure>
+                </div>
+
+                <!-- Text Column -->
+                <div class="column is-8">
+                  <h2 class="title is-4"> Cooperative Task and Motion Planning for Multi-Arm Assembly Systems                  </h2>
+                  <p>
+                    Jingkai Chen, Jiaoyang Li, Yijiang Huang, Caelan Garrett, Dawei Sun, Chuchu Fan, Andreas Hofmann, Caitlin Mueller, Sven Koenig, Brian C. Williams
+                    <br />
+                    arXiv, 2022
+                  </p>
+                  <p>
+                    <a href="https://arxiv.org/abs/2203.02475"
+                      class="button is-link">Paper</a>
+                                   <a href="https://www.youtube.com/watch?v=jiVuZS1lo1M" class="button is-link">Video</a>
+                    <!--                <a href="https://ashish-kmr.github.io/rma-legged-robots/" class="button is-link">Project Page</a>-->
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="container">
+              <div class="columns is-vcentered">
+                <!-- Image Column -->
+                <div class="column is-4">
+                  <figure class="image">
+                    <img src="./resources/mramp-icaps2024.gif" alt="RMA Image">
+                  </figure>
+                </div>
+
+                <!-- Text Column -->
+                <div class="column is-8">
+                  <h2 class="title is-4"> Accelerating Search-Based Planning for Multi-Robot Manipulation by Leveraging Online-Generated Experiences   </h2>
+                  <p>
+                    Yorai Shaoul*, Itamar Mishani*, Maxim Likhachev,  Jiaoyang Li
+                    <br />
+                    International Conference on Automated Planning and Scheduling (ICAPS), 2024
+                  </p>
+                  <p>
+                    <a href="https://arxiv.org/abs/2404.00143"
+                      class="button is-link">Paper</a>
+                      <a href="https://x-cbs.github.io/" class="button is-link">website</a>
+                    <!--                <a href="https://ashish-kmr.github.io/rma-legged-robots/" class="button is-link">Project Page</a>-->
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="container">
+              <div class="columns is-vcentered">
+                <!-- Image Column -->
+                <div class="column is-4">
+                  <figure class="image">
+                    <img src="./resources/gencbs.gif" alt="RMA Image">
+                  </figure>
+                </div>
+
+                <!-- Text Column -->
+                <div class="column is-8">
+                  <h2 class="title is-4"> Unconstraining Multi-Robot Manipulation: Enabling Arbitrary Constraints in ECBS with Bounded Sub-Optimality  </h2>
+                  <p>
+                    Yorai Shaoul*, Rishi Veerapaneni*, Maxim Likhachev,  Jiaoyang Li
+                    <br />
+                      International Symposium on Combinatorial Search (SoCS), 2024
+                  </p>
+                  <p>
+                    <a href="https://ojs.aaai.org/index.php/SOCS/article/view/31548/33708"
+                      class="button is-link">Paper</a>
+                    <!--                <a href="https://ashish-kmr.github.io/rma-legged-robots/" class="button is-link">Project Page</a>-->
+                  </p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="content has-text-centered">
+
+          <br />
+
+          <p>Page template borrowed from <a
+              href="https://worldsheet.github.io/"><span
+                class="dnerf">Worldsheet</span></a> and <a
+              href="https://nerfies.github.io/"><span
+                class="dnerf">Nerfies</span></a>.</p>
+        </div>
+      </div>
+    </footer>
+
+  </body>
+</html>
