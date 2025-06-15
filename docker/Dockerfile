@@ -41,13 +41,8 @@ RUN mkdir -p catkin_ws/src && \
     /bin/bash -c '. /opt/ros/noetic/setup.bash; cd catkin_ws; catkin init'
 
 RUN cd catkin_ws/src \
-    && git clone https://github.com/philip-huang/mr-shortcut.git \
+    && git clone https://github.com/philip-huang/mr-shortcut.git
 
-
-RUN cd catkin_ws/src \
-    && git clone https://github.com/intelligent-control-lab/Robot_Digital_Twin.git \
-    && cd Robot_Digital_Twin \
-    && git checkout dual-arm-mfi
 
 # build the workspace
 RUN /bin/bash -c '. /opt/ros/noetic/setup.bash; cd catkin_ws; catkin build -DCMAKE_BUILD_TYPE=Release'

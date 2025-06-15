@@ -1,5 +1,4 @@
 #include "planner.h"
-#include "sipp_rrt.h"
 #include "instance.h"
 #include "logger.h"
 #include <boost/algorithm/string.hpp>
@@ -35,8 +34,6 @@ bool PriorityPlanner::plan(const PlannerOptions &options) {
         std::shared_ptr<SingleAgentPlanner> planner;
         if (options.single_agent_planner == "STRRT") {
             planner = std::make_shared<STRRT>(instance_, robot_id);
-        } else if (options.single_agent_planner == "SIPP_RRT") {
-            planner = std::make_shared<SIPP_RRT>(instance_, robot_id);
         }
         else {
             log("Unknown single agent planner: " + options.single_agent_planner, LogLevel::ERROR);

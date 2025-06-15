@@ -3,6 +3,7 @@
 
 #include "logger.h"
 #include "instance.h"
+#include "planner.h"
 #include <random>
 
 struct ShortcutOptions {
@@ -60,7 +61,6 @@ struct Shortcut {
     std::vector<RobotPose> path;
     std::vector<std::vector<RobotPose>> comp_path; // robot pose at each timestep for each robot
     std::vector<int> subset_indices;
-    std::shared_ptr<Activity> act;
     CollisionType col_type = CollisionType::UNKNOWN;
 
     std::vector<double> new_t_afterb;

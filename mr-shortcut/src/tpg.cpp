@@ -2575,14 +2575,6 @@ void TPG::moveit_async_execute_thread(const std::vector<std::string> &joint_name
             ros::Duration(0.03).sleep();
             continue;
         }
-
-        // if we need to execute a policy, execute
-        if (isPolicyNode(node_i->Type1Next)) {
-            NodePtr endNode;
-            executePolicy(node_i->Type1Next, endNode);
-            node_i = endNode;
-            continue;
-        }
         
         int j = 0;
 
@@ -2617,12 +2609,6 @@ void TPG::moveit_async_execute_thread(const std::vector<std::string> &joint_name
                     if (executed_steps_[edge->nodeFrom->robotId]->load() < edge->nodeFrom->timeStep) {
                         stop = true;
                     }
-                }
-            }
-            // check adg policies
-            if (!stop) {
-                if (isPolicyNode(node_i->Type1Next)) {
-                    stop = true;
                 }
             }
         } while (!stop);
@@ -2725,10 +2711,6 @@ void TPG::update_joint_states(const std::vector<double> &joint_states, int robot
                 return;
             }
 
-            if (isPolicyNode(node_i)) {
-                return;
-            }
-
             double error = 0;
             for (int i = 0; i < joint_states_[robot_id].size(); i++) {
                 error += std::abs(joint_states_[robot_id][i] - node_i->pose.joint_values[i]);
@@ -2743,9 +2725,6 @@ void TPG::update_joint_states(const std::vector<double> &joint_states, int robot
 
 }
 
-bool TPG::isPolicyNode(NodePtr node) const {
-    return false;
-}
 
 
 }

@@ -2,7 +2,6 @@
 #define MR_SHORTCUT_EXECUTION_H
 
 #include <planner.h>
-#include <task.h>
 #include <queue>
 #include <stack>
 #include <map>
@@ -141,7 +140,6 @@ namespace tpg {
         std::weak_ptr<Node> nj;
         std::vector<RobotPose> path;
         std::weak_ptr<Node> n_robot_col;
-        std::shared_ptr<Activity> activity;
         std::vector<int> subset_indices;
         CollisionType col_type = CollisionType::UNKNOWN;
 
@@ -310,8 +308,6 @@ namespace tpg {
             return 0;
         }
 
-        virtual std::shared_ptr<ActivityGraph> getActGraph() const {return nullptr;}
-
     protected:
         int getTotalNodes() const;
         int getTotalType2Edges() const;
@@ -346,9 +342,7 @@ namespace tpg {
         bool hasCycle() const;
         bool repairTPG(std::shared_ptr<PlanInstance> instance, Shortcut &shortcut, const std::vector<std::vector<int>> &earliest_t);
         virtual void moveit_async_execute_thread(const std::vector<std::string> &joint_names, ros::ServiceClient &clients, int robot_id);
-        virtual bool isPolicyNode(NodePtr node) const;
         virtual NodePtr getExecStartNode(int robot_id) const;
-        virtual bool executePolicy(const NodePtr &startNode, NodePtr &endNode) {throw std::runtime_error("Not implemented");};
 
         TPGConfig config_;
         double dt_ = 0.1;
