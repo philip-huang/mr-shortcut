@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot
+  name="Yaskawa_gp50" xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:macro name="Yaskawa_gp50">
+  <xacro:include 
+    filename="$(find robot_digital_twin)/urdf/common_materials.xacro"/>
+  <link name = "world"/>
+
+  <joint name = "world_fixed"
+    type = "fixed">
+    <parent link = "world" />
+    <child link = "base" />
+  </joint>
+
+  <link name="base" />
+    <joint name="base_link-base" type="fixed">
+      <origin xyz="0 0 0.0" rpy="0 0 0"/>
+      <parent link="base"/>
+      <child link="base_link"/>
+    </joint>
+
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="-0.073983 0.00022734 0.13031"
+        rpy="0 0 0" />
+      <mass
+        value="42.212" />
+      <inertia
+        ixx="0.64296"
+        ixy="0.0012624"
+        ixz="-0.068804"
+        iyy="1.2709"
+        iyz="-0.0010754"
+        izz="1.3497" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find robot_digital_twin)/meshes/gp50/base_link.STL" />
+      </geometry>
+      <xacro:material_yaskawa_blue/>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find robot_digital_twin)/meshes/gp50/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="link_1">
+    <inertial>
+      <origin
+        xyz="0.058962 0.24363 -0.018725"
+        rpy="0 0 0" />
+      <mass
+        value="37.265" />
+      <inertia
+        ixx="0.95018"
+        ixy="-0.14402"
+        ixz="-0.064915"
+        iyy="1.0578"
+        iyz="0.037699"
+        izz="1.094" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find robot_digital_twin)/meshes/gp50/link_1.STL" />
+      </geometry>
+      <xacro:material_yaskawa_blue/>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find robot_digital_twin)/meshes/gp50/link_1.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint_1"
+    type="continuous">
+    <origin
+      xyz="0 0 0.223"
+      rpy="1.5708 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="link_1" />
+    <axis
+      xyz="0 1 0" />
+  </joint>
+  <link
+    name="link_2">
+    <inertial>
+      <origin
+        xyz="3.5083E-05 0.39008 0.15036"
+        rpy="0 0 0" />
+      <mass
+        value="22.632" />
+      <inertia
+        ixx="1.7745"
+        ixy="-0.0054743"
+        ixz="0.00063015"
+        iyy="0.15511"
+        iyz="-0.09224"
+        izz="1.826" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find robot_digital_twin)/meshes/gp50/link_2.STL" />
+      </geometry>
+      <xacro:material_yaskawa_blue/>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find robot_digital_twin)/meshes/gp50/link_2.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint_2"
+    type="continuous">
+    <origin
+      xyz="0.145 0.315 0.0435"
+      rpy="0 0 0" />
+    <parent
+      link="link_1" />
+    <child
+      link="link_2" />
+    <axis
+      xyz="0 0 -1" />
+  </joint>
+  <link
+    name="link_3">
+    <inertial>
+      <origin
+        xyz="0.086423 0.14427 -0.035793"
+        rpy="0 0 0" />
+      <mass
+        value="28.467" />
+      <inertia
+        ixx="0.65771"
+        ixy="-0.13627"
+        ixz="-0.026219"
+        iyy="0.52683"
+        iyz="0.051956"
+        izz="0.69722" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find robot_digital_twin)/meshes/gp50/link_3.STL" />
+      </geometry>
+      <xacro:material_yaskawa_blue/>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find robot_digital_twin)/meshes/gp50/link_3.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint_3"
+    type="continuous">
+    <origin
+      xyz="0 0.87 0"
+      rpy="0 0 0" />
+    <parent
+      link="link_2" />
+    <child
+      link="link_3" />
+    <axis
+      xyz="0 0 1" />
+  </joint>
+  <link
+    name="link_4">
+    <inertial>
+      <origin
+        xyz="0.37337 0.00033491 0.012656"
+        rpy="0 0 0" />
+      <mass
+        value="7.629" />
+      <inertia
+        ixx="0.018151"
+        ixy="-0.00033527"
+        ixz="-0.031589"
+        iyy="0.48072"
+        iyz="3.3917E-05"
+        izz="0.47647" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find robot_digital_twin)/meshes/gp50/link_4.STL" />
+      </geometry>
+      <xacro:material_yaskawa_blue/>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find robot_digital_twin)/meshes/gp50/link_4.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint_4"
+    type="continuous">
+    <origin
+      xyz="0.317 0.21 -0.0435"
+      rpy="0 0 0" />
+    <parent
+      link="link_3" />
+    <child
+      link="link_4" />
+    <axis
+      xyz="-1 0 0" />
+  </joint>
+  <link
+    name="link_5">
+    <inertial>
+      <origin
+        xyz="0.062818 3.3289E-05 0.0048991"
+        rpy="0 0 0" />
+      <mass
+        value="2.5794" />
+      <inertia
+        ixx="0.015161"
+        ixy="-2.4835E-06"
+        ixz="0.0016647"
+        iyy="0.021382"
+        iyz="-2.248E-06"
+        izz="0.013473" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find robot_digital_twin)/meshes/gp50/link_5.STL" />
+      </geometry>
+      <xacro:material_yaskawa_blue/>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find robot_digital_twin)/meshes/gp50/link_5.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint_5"
+    type="continuous">
+    <origin
+      xyz="0.7065 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="link_4" />
+    <child
+      link="link_5" />
+    <axis
+      xyz="0 0 1" />
+  </joint>
+  <link
+    name="link_6">
+    <inertial>
+      <origin
+        xyz="0.00015982 -0.00063018 -0.008266"
+        rpy="0 0 0" />
+      <mass
+        value="0.10811" />
+      <inertia
+        ixx="9.0129E-05"
+        ixy="-1.0891E-08"
+        ixz="9.1598E-09"
+        iyy="9.2026E-05"
+        iyz="-2.749E-07"
+        izz="0.00017818" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find robot_digital_twin)/meshes/gp50/link_6.STL" />
+      </geometry>
+      <xacro:material_yaskawa_blue/>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find robot_digital_twin)/meshes/gp50/link_6.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint_6"
+    type="continuous">
+    <origin
+      xyz="0.174 0 -0.001"
+      rpy="1.5708 0 1.5708" />
+    <parent
+      link="link_5" />
+    <child
+      link="link_6" />
+    <axis
+      xyz="0 0 -1" />
+  </joint>
+  </xacro:macro>
+
+  <xacro:Yaskawa_gp50>
+  </xacro:Yaskawa_gp50>
+
+  <xacro:macro name="transmission_block" params="joint_name">
+    <transmission name = "trans_${joint_name}">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name = "${joint_name}">
+        <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      </joint>
+      <actuator name = "${joint_name}_motor">
+        <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+  </xacro:macro>
+  <xacro:transmission_block joint_name = "joint_1"/>
+  <xacro:transmission_block joint_name = "joint_2"/>
+  <xacro:transmission_block joint_name = "joint_3"/>
+  <xacro:transmission_block joint_name = "joint_4"/>
+  <xacro:transmission_block joint_name = "joint_5"/>
+  <xacro:transmission_block joint_name = "joint_6"/>
+
+  <gazebo>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+	    <!-- <robotNamespace>/gp4_gazebo</robotNamespace> -->
+      <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+      <legacyModeNS>true</legacyModeNS>
+    </plugin>
+  </gazebo>
+
+  <gazebo reference="link_1">
+     <material>Gazebo/Blue</material>
+    <visual> <transparency> 0 </transparency> </visual>
+  </gazebo>
+  <gazebo reference="link_2">
+     <material>Gazebo/Blue</material>
+    <visual> <transparency> 0 </transparency> </visual>
+  </gazebo>
+  <gazebo reference="link_3">
+     <material>Gazebo/Blue</material>
+    <visual> <transparency> 0 </transparency> </visual>
+  </gazebo>
+  <gazebo reference="link_4">
+     <material>Gazebo/Blue</material>
+    <visual> <transparency> 0 </transparency> </visual>
+  </gazebo>
+  <gazebo reference="link_5">
+     <material>Gazebo/Blue</material>
+    <visual> <transparency> 0 </transparency> </visual>
+  </gazebo>
+  <gazebo reference="link_6">
+     <material>Gazebo/Blue</material>
+    <visual> <transparency> 0 </transparency> </visual>
+  </gazebo>
+  <gazebo reference="base_link">
+     <material>Gazebo/Blue</material>
+    <visual> <transparency> 0 </transparency> </visual>
+  </gazebo>
+
+</robot>

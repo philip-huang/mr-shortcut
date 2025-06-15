@@ -1,0 +1,118 @@
+<?xml version="1.0"?>
+<launch>
+    <!-- Gazebo options -->
+    <arg name="ns" default="/" />
+    <arg name="use_rviz" default="true" />
+    <arg name="benchmark" default="false" />
+    <arg name="random_shortcut" default="true" />
+    <arg name="shortcut_time" default="0.1" />
+    <arg name="tight_shortcut" default="true" />
+    <arg name="output_file" default="$(find mr-shortcut)/outputs/dual_gp4_benchmark.csv" />
+    <arg name="planner_name" default="RRTConnect" />
+    <arg name="planning_time_limit" default="2.0" />
+    <arg name="load_tpg" default="true" />
+    <arg name="load_cbs" default="false" />
+    <arg name="composite_shortcut" default="false" />
+    <arg name="prioritized_shortcut" default="false" />
+    <arg name="path_shortcut" default="false" />
+    <arg name="tpg_shortcut" default="false" />
+    <arg name="auto_selector" default="false" />
+    <arg name="round_robin" default="false" />
+    <arg name="thompson_selector" default="true" />
+    <arg name="tpg_savedir" default="$(find mr-shortcut)/outputs/tpgs/t=15.0_RRTConnect_dual_gp4" />
+    <arg name="forward_doubleloop" default="false" />
+    <arg name="backward_doubleloop" default="false" />
+    <arg name="forward_singleloop" default="false" />
+    <arg name="biased_sample" default="false" />
+    <arg name="subset_shortcut" default="false" />
+    <arg name="subset_prob" default="0.4" />
+    <arg name="gdb" default="false" />
+    <arg name="loglevel" default="info" />
+    <arg name="mfi" default="true" />
+    <arg name="async" default="true" />
+
+    <arg name="demo" default="false" />
+
+    <!-- Start the robot state publisher, simulation, and controler -->
+    <!-- <include file="$(find dual_gp4_moveit_config)/launch/demo_gazebo.launch">
+    </include> -->
+
+    <env name="LIBGL_ALWAYS_SOFTWARE" value="1"/>
+
+    <group ns="$(arg ns)">
+        <include file="$(find dual_gp4_moveit_config)/launch/demo.launch">
+            <arg name="use_rviz" value="$(arg use_rviz)" />
+        </include>
+
+        <!-- Start the demo test node -->
+        <node name="test_collision" pkg="mr-shortcut" type="demo" output="screen" required="true" if="$(arg demo)">
+            <param name="num_robots" value="2" />
+            <param name="movegroup_name" value="dual_arms" />
+            <param name="group_name_0" value="left_arm" />
+            <param name="group_name_1" value="right_arm" />
+            <param name="mfi" value="false" />
+            <param name="async" value="false" />
+            <param name="shortcut" value="true" />
+            <param name="tight_shortcut" value="true" />
+            <param name="shortcut_time" value="0.1" />
+            <param name="planner_name" value="RRTConnect" />
+            <param name="planning_time_limit" value="4.0" />
+            <param name="benchmark" value="false" />
+            <param name="tpg_shortcut" value="true" />
+            <param name="pose_name" value="left_push_up" />
+        </node>
+        
+        <param name="planning_plugin" value="chomp_interface/CHOMPPlanner" />
+        
+        <node launch-prefix="$(eval 'xterm -e gdb --args' if arg ('gdb') else '')"
+             name="test_collision" pkg="mr-shortcut" type="demo" output="screen" required="true" unless="$(arg demo)">
+            <param name="num_robots" value="2" />
+            <param name="movegroup_name" value="dual_arms" />
+            <param name="group_name_0" value="left_arm" />
+            <param name="group_name_1" value="right_arm" />
+            <param name="mfi" value="$(arg mfi)" />
+            <param name="async" value="$(arg async)" />
+            <param name="shortcut" value="true" />
+            <param name="random_shortcut" value="$(arg random_shortcut)" />
+            <param name="shortcut_time" value="$(arg shortcut_time)" />
+            <param name="tight_shortcut" value="$(arg tight_shortcut)" />
+            <param name="planner_name" value="$(arg planner_name)" />
+            <param name="planning_time_limit" value="$(arg planning_time_limit)" />
+            <param name="benchmark" value="$(arg benchmark)" />
+            <param name="output_file" value="$(arg output_file)" />
+            <param name="load_tpg" value="$(arg load_tpg)" />
+            <param name="load_cbs" value="$(arg load_cbs)" />
+            <param name="composite_shortcut" value="$(arg composite_shortcut)" />
+            <param name="prioritized_shortcut" value="$(arg prioritized_shortcut)" />
+            <param name="path_shortcut" value="$(arg path_shortcut)"/>
+            <param name="tpg_shortcut" value="$(arg tpg_shortcut)" />
+            <param name="auto_selector" value="$(arg auto_selector)" />
+            <param name="round_robin" value="$(arg round_robin)" />
+            <param name="thompson_selector" value="$(arg thompson_selector)" />
+            <param name="tpg_savedir" value="$(arg tpg_savedir)" />
+            <param name="forward_doubleloop" value="$(arg forward_doubleloop)" />
+            <param name="backward_doubleloop" value="$(arg backward_doubleloop)" />
+            <param name="forward_singleloop" value="$(arg forward_singleloop)" />
+            <param name="biased_sample" value="$(arg biased_sample)" />
+            <param name="subset_shortcut" value="$(arg subset_shortcut)" />
+            <param name="subset_prob" value="$(arg subset_prob)" />
+            <param name="log_interval" value="0.025" />
+            <param name="loglevel" value="$(arg loglevel)" />
+
+            <!-- test cases with big differences -->
+            <param name = "pose_name" value="random1" />
+            <param name = "pose_name1" value="random6" />
+            <param name = "pose_name2" value="random1" />
+            <param name = "pose_name3" value="ready_pose" />
+            <param name = "pose_name4" value="left_push_up" />
+            <param name = "pose_name5" value="right_push_up" />
+            <param name = "pose_name6" value="left_push_up" />
+            <param name = "pose_name7" value="ready_pose" />
+            <param name = "pose_name8" value="left_rotated" />
+            <param name = "pose_name9" value="right_rotated" />
+            <param name = "pose_name10" value="left_rotated" />
+            <param name = "pose_name11" value="ready_pose" />
+        </node>
+    </group>
+
+</launch>

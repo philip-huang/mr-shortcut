@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot 
+  name="camera" xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:macro name="camera">
+  <xacro:include 
+    filename="$(find robot_digital_twin)/urdf/common_materials.xacro"/>
+  
+  <link name = "world"/>
+
+  <joint name = "world_fixed"
+    type = "fixed">
+    <parent link = "world" />
+    <child link = "base" />
+  </joint>
+
+  <!-- ROS-Industrial 'base' frame: base_link to gp4 World Coordinates transform -->
+    <link name="base" />
+
+
+    <!-- links: main serial chain -->
+    <link name="link_camera">
+    <inertial>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <mass
+        value="0.10811" />
+      <inertia
+        ixx="9.0129E-05"
+        ixy="-1.0891E-08"
+        ixz="9.1598E-09"
+        iyy="9.2026E-05"
+        iyz="-2.749E-07"
+        izz="0.00017818" />
+    </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find robot_digital_twin)/meshes/eoat/femto_bolt.stl"/>
+        </geometry>
+        <xacro:material_fanuc_black />
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find robot_digital_twin)/meshes/eoat/femto_bolt.stl"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="link_camera_origin">
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.0001 0.0001 0.0001"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.0001 0.01 0.01"/>
+      </geometry>
+    </visual>
+      <inertial>
+        <mass value="1e-5" />
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
+      </inertial>
+    </link>
+
+    <!-- joints: main serial chain -->
+    
+    <joint name="precam_camera" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <parent link="base" />
+      <child link="link_camera" />
+    </joint>
+    <joint name="camera_imgplane" type="fixed">
+      <origin xyz="0.045 0 0" rpy="0 0 0" />
+      <parent link="link_camera" />
+      <child link="link_camera_origin" />
+    </joint>
+  </xacro:macro>
+
+  <xacro:camera>
+  </xacro:camera>
+
+
+  <gazebo reference="link_camera_origin">
+  <sensor name="$depth_camera" type="depth">
+    <update_rate>30</update_rate>
+    <camera>
+      <horizontal_fov>1.39626340156</horizontal_fov> <!-- 80deg -->
+      <image>
+        <width>3840</width>
+        <height>2160</height>
+        <format>R8G8B8</format>
+      </image>
+      <clip>
+        <near>0.005</near>
+        <far>2</far>
+      </clip>
+    </camera>
+    <plugin name="$depth_camera_controller" filename="libgazebo_ros_openni_kinect.so">
+      <baseline>0.2</baseline>
+      <alwaysOn>true</alwaysOn>
+      <updateRate>0</updateRate>
+      <cameraName>fixed_camera</cameraName>
+      <frameName>depth_camera_link</frameName>
+      <pointCloudCutoff>0.005</pointCloudCutoff>
+      <pointCloudCutoffMax>2.0</pointCloudCutoffMax>
+      <distortionK1>0</distortionK1>
+      <distortionK2>0</distortionK2>
+      <distortionK3>0</distortionK3>
+      <distortionT1>0</distortionT1>
+      <distortionT2>0</distortionT2>
+      <CxPrime>0</CxPrime>
+      <Cx>0</Cx>
+      <Cy>0</Cy>
+      <focalLength>0</focalLength>
+      <hackBaseline>0</hackBaseline>
+    </plugin>
+  </sensor>
+</gazebo>
+
+
+  <gazebo reference="link_camera_origin">
+     <material>Gazebo/Black</material>
+    <visual> <transparency> 0 </transparency> </visual>
+  </gazebo> 
+</robot>

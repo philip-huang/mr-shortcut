@@ -1,0 +1,105 @@
+<launch>
+    <!-- these are the arguments you can pass this launch file, for example paused:=true -->
+    <arg name="paused" default="false"/>
+    <arg name="use_sim_time" default="true"/>
+    <arg name="gui" default="true"/>
+    <arg name="headless" default="false"/>
+    <arg name="debug" default="false"/>
+    <arg name="env" default="vis_lego"/>
+    <arg name="num_b2" default="50"/> 
+    <arg name="num_b3" default="4"/> 
+    <arg name="num_b4" default="0"/> 
+    <arg name="num_b5" default="26"/> 
+    <arg name="num_b6" default="2"/> 
+    <arg name="num_b9" default="6"/> 
+    <arg name="num_b10" default="0"/> 
+    <arg name="num_b12" default="20"/> 
+    <arg name="color_b2" default="Red"/> 
+    <arg name="color_b3" default="Red"/> 
+    <arg name="color_b4" default="Red"/> 
+    <arg name="color_b5" default="Red"/> 
+    <arg name="color_b6" default="Red"/> 
+    <arg name="color_b9" default="Red"/> 
+    <arg name="color_b10" default="Red"/> 
+    <arg name="color_b12" default="Red"/> 
+
+    <include 
+        file="$(find robot_digital_twin)/launch/$(arg env).launch">
+        <arg name="launch_world" value="false"/>
+        <arg name="num_b2" value="$(arg num_b2)" /> 
+        <arg name="num_b3" default="$(arg num_b3)"/> 
+        <arg name="num_b4" default="$(arg num_b4)"/> 
+        <arg name="num_b5" default="$(arg num_b5)"/> 
+        <arg name="num_b6" default="$(arg num_b6)"/> 
+        <arg name="num_b9" default="$(arg num_b9)"/> 
+        <arg name="num_b10" default="$(arg num_b10)"/> 
+        <arg name="num_b12" default="$(arg num_b12)"/> 
+        <arg name="color_b2" default="$(arg color_b2)"/> 
+        <arg name="color_b3" default="$(arg color_b3)"/> 
+        <arg name="color_b4" default="$(arg color_b4)"/> 
+        <arg name="color_b5" default="$(arg color_b5)"/> 
+        <arg name="color_b6" default="$(arg color_b6)"/> 
+        <arg name="color_b9" default="$(arg color_b9)"/> 
+        <arg name="color_b10" default="$(arg color_b10)"/> 
+        <arg name="color_b12" default="$(arg color_b12)"/> 
+    </include>
+
+    <include
+        file="$(find robot_digital_twin)/launch/env.launch">
+        <arg name="launch_world" value="true"/>
+        <arg name="x" value="0"/>
+        <arg name="y" value="0"/>
+        <arg name="z" value="0.9946"/>
+        <arg name="roll" value="0"/>
+        <arg name="pitch" value="0"/>
+        <arg name="yaw" value="0"/>
+    </include>
+    
+    <include
+        file="$(find robot_digital_twin)/launch/gp4.launch">
+        <arg name="namespace" value="/r1/"/>
+        <arg name="launch_world" value="false"/>
+        <arg name="x" value="0"/>
+        <arg name="y" value="0"/>
+        <arg name="z" value="0.9246"/>
+        <arg name="roll" value="0"/>
+        <arg name="pitch" value="0"/>
+        <arg name="yaw" value="0"/>
+    </include>
+
+    <include
+        file="$(find robot_digital_twin)/launch/gp4.launch">
+        <arg name="namespace" value="/r2/"/>
+        <arg name="launch_world" value="false"/>
+        <arg name="x" value="0.87873619"/>
+        <arg name="y" value="-0.01096861"/>
+        <arg name="z" value="0.9246"/>
+        <arg name="roll" value="0"/>
+        <arg name="pitch" value="0"/>
+        <arg name="yaw" value="3.13707732"/>
+    </include>
+
+    <include
+        file="$(find robot_digital_twin)/launch/camera.launch">
+        <arg name="namespace" value="/camera1/"/>
+        <arg name="launch_world" value="false"/>
+        <arg name="x" value="-0.22457"/>
+        <arg name="y" value="-0.50733"/>
+        <arg name="z" value="1.250"/>
+        <arg name="roll" value="0"/>
+        <arg name="pitch" value="0.17"/>
+        <arg name="yaw" value="0.65"/>
+    </include>
+
+    <include
+        file="$(find robot_digital_twin)/launch/camera.launch">
+        <arg name="namespace" value="/camera2/"/>
+        <arg name="launch_world" value="false"/>
+        <arg name="x" value="1.059"/>
+        <arg name="y" value="0.50733"/>
+        <arg name="z" value="1.250"/>
+        <arg name="roll" value="0"/>
+        <arg name="pitch" value="0.17"/>
+        <arg name="yaw" value="-2.5415926"/>
+    </include>
+</launch>

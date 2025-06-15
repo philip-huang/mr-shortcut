@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- Gazebo options -->
+  <arg name="gazebo_gui" default="true" doc="Start Gazebo GUI"/>
+  <arg name="paused" default="false" doc="Start Gazebo paused"/>
+  <arg name="world_name" default="worlds/empty.world" doc="Gazebo world file"/>
+  <arg name="world_pose" default="-x 0 -y 0 -z 0 -R 0 -P 0 -Y 0" doc="Pose to spawn the robot at"/>
+  <arg name="initial_joint_positions" default=" -J panda0_finger_joint1 0.035 -J panda0_joint1 -0.069 -J panda0_joint2 0.5876 -J panda0_joint3 0.184 -J panda0_joint4 -1.3065 -J panda0_joint5 0.2989 -J panda0_joint6 2.3163 -J panda0_joint7 1.2187 -J panda1_finger_joint1 0.035 -J panda1_joint1 0.092 -J panda1_joint2 0.7975 -J panda1_joint3 -0.003 -J panda1_joint4 -1.5 -J panda1_joint5 2.2535 -J panda1_joint6 1 -J panda1_joint7 0 -J panda2_finger_joint1 0.035 -J panda2_joint1 0 -J panda2_joint2 0.1819 -J panda2_joint3 -0.3679 -J panda2_joint4 -1.3065 -J panda2_joint5 -0.4599 -J panda2_joint6 2.15 -J panda2_joint7 0 -J panda3_finger_joint1 0.035 -J panda3_joint1 0.138 -J panda3_joint2 1.0633 -J panda3_joint3 0.3909 -J panda3_joint4 -0.9755 -J panda3_joint5 1.1497 -J panda3_joint6 2.795 -J panda3_joint7 0" doc="Initial joint configuration of the robot"/>
+
+  <!-- Start Gazebo paused to allow the controllers to pickup the initial pose -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch" pass_all_args="true">
+    <arg name="paused" value="true"/>
+  </include>
+
+  <!-- Set the robot urdf on the parameter server -->
+  <param name="robot_description" command="xacro  '$(find panda_four_moveit_config)/../panda_four_description/urdf/panda_four.urdf.xacro'" />
+
+  <!-- Unpause the simulation after loading the robot model -->
+  <arg name="unpause" value="$(eval '' if arg('paused') else '-unpause')" />
+
+  <!-- Spawn the robot in Gazebo -->
+  <node name="spawn_gazebo_model" pkg="gazebo_ros" type="spawn_model" args="-urdf -param robot_description -model robot $(arg unpause) $(arg world_pose) $(arg initial_joint_positions)"
+    respawn="false" output="screen" />
+
+  <!-- Load the controller parameters onto the parameter server -->
+  <rosparam file="$(find panda_four_moveit_config)/config/gazebo_controllers.yaml" />
+  <include file="$(dirname)/ros_controllers.launch"/>
+
+  <!-- Spawn the Gazebo ROS controllers -->
+  <node name="gazebo_controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="joint_state_controller" />
+
+  <!-- Given the published joint states, publish tf for the robot links -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="true" output="screen" />
+</launch>

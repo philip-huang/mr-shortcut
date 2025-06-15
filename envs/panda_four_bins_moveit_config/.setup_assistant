@@ -1,0 +1,11 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: panda_four_bins_moveit_config
+    relative_path: ../panda_four_description/urdf/panda_four_binpick.urdf.xacro
+    xacro_args: ""
+  SRDF:
+    relative_path: config/panda.srdf
+  CONFIG:
+    author_name: Philip Huang
+    author_email: philiphuang@cmu.edu
+    generated_timestamp: 1712791891

@@ -1,0 +1,740 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This does not replace URDF, and is not an extension of URDF.
+    This is a format for representing semantic information about the robot structure.
+    A URDF file must exist for this robot as well, where the joints and the links that are referenced are defined
+-->
+<robot name="panda">
+    <!--GROUPS: Representation of a set of joints and links. This can be useful for specifying DOF to plan for, defining arms, end effectors, etc-->
+    <!--LINKS: When a link is specified, the parent joint of that link (if it exists) is automatically included-->
+    <!--JOINTS: When a joint is specified, the child link of that joint (which will always exist) is automatically included-->
+    <!--CHAINS: When a chain is specified, all the links along the chain (including endpoints) are included in the group. Additionally, all the joints that are parents to included links are also included. This means that joints along the chain and the parent joint of the base link are included in the group-->
+    <!--SUBGROUPS: Groups can also be formed by referencing to already defined group names-->
+    <group name="panda0_arm">
+        <joint name="panda0_joint1"/>
+        <joint name="panda0_joint6"/>
+        <joint name="panda0_joint4"/>
+        <joint name="panda0_joint5"/>
+        <joint name="panda0_joint3"/>
+        <joint name="panda0_joint2"/>
+        <joint name="panda0_joint7"/>
+        <joint name="panda0_joint8"/>
+        <joint name="panda0_joint_base"/>
+    </group>
+    <group name="panda0_hand">
+        <joint name="panda0_hand_joint"/>
+        <joint name="panda0_finger_joint1"/>
+        <joint name="panda0_finger_joint2"/>
+    </group>
+    <group name="panda1_arm">
+        <joint name="panda1_joint_base"/>
+        <joint name="panda1_joint1"/>
+        <joint name="panda1_joint2"/>
+        <joint name="panda1_joint3"/>
+        <joint name="panda1_joint4"/>
+        <joint name="panda1_joint5"/>
+        <joint name="panda1_joint6"/>
+        <joint name="panda1_joint7"/>
+        <joint name="panda1_joint8"/>
+        <joint name="panda1_joint1"/>
+    </group>
+    <group name="panda1_hand">
+        <joint name="panda1_hand_joint"/>
+        <joint name="panda1_finger_joint1"/>
+        <joint name="panda1_finger_joint2"/>
+    </group>
+    <group name="panda2_arm">
+        <joint name="panda2_joint_base"/>
+        <joint name="panda2_joint1"/>
+        <joint name="panda2_joint2"/>
+        <joint name="panda2_joint3"/>
+        <joint name="panda2_joint4"/>
+        <joint name="panda2_joint5"/>
+        <joint name="panda2_joint6"/>
+        <joint name="panda2_joint7"/>
+        <joint name="panda2_joint8"/>
+    </group>
+    <group name="panda2_hand">
+        <joint name="panda2_hand_joint"/>
+        <joint name="panda2_finger_joint1"/>
+        <joint name="panda2_finger_joint2"/>
+    </group>
+    <group name="panda_multi_arm">
+        <group name="panda1_arm"/>
+        <group name="panda2_arm"/>
+        <group name="panda0_arm"/>
+    </group>
+    <!--GROUP STATES: Purpose: Define a named state for a particular group, in terms of joint values. This is useful to define states like 'folded arms'-->
+    <group_state name="ready_pose" group="panda_multi_arm">
+        <joint name="panda0_joint1" value="0"/>
+        <joint name="panda0_joint2" value="0"/>
+        <joint name="panda0_joint3" value="0"/>
+        <joint name="panda0_joint4" value="0"/>
+        <joint name="panda0_joint5" value="0"/>
+        <joint name="panda0_joint6" value="0"/>
+        <joint name="panda0_joint7" value="0"/>
+        <joint name="panda1_joint1" value="0"/>
+        <joint name="panda1_joint2" value="0"/>
+        <joint name="panda1_joint3" value="0"/>
+        <joint name="panda1_joint4" value="0"/>
+        <joint name="panda1_joint5" value="0"/>
+        <joint name="panda1_joint6" value="0"/>
+        <joint name="panda1_joint7" value="0"/>
+        <joint name="panda2_joint1" value="0"/>
+        <joint name="panda2_joint2" value="0"/>
+        <joint name="panda2_joint3" value="0"/>
+        <joint name="panda2_joint4" value="0"/>
+        <joint name="panda2_joint5" value="0"/>
+        <joint name="panda2_joint6" value="0"/>
+        <joint name="panda2_joint7" value="0"/>
+    </group_state>
+    <group_state name="wall1_pose" group="panda_multi_arm">
+        <joint name="panda0_joint1" value="-0.063"/>
+        <joint name="panda0_joint2" value="0.8814"/>
+        <joint name="panda0_joint3" value="-1.0392"/>
+        <joint name="panda0_joint4" value="-0.35"/>
+        <joint name="panda0_joint5" value="1.4172"/>
+        <joint name="panda0_joint6" value="2.3797"/>
+        <joint name="panda0_joint7" value="-1.7006"/>
+        <joint name="panda1_joint1" value="0.5039"/>
+        <joint name="panda1_joint2" value="0.5748"/>
+        <joint name="panda1_joint3" value="-0.5984"/>
+        <joint name="panda1_joint4" value="-1.2753"/>
+        <joint name="panda1_joint5" value="2.8973"/>
+        <joint name="panda1_joint6" value="2.6002"/>
+        <joint name="panda1_joint7" value="2.236"/>
+        <joint name="panda2_joint1" value="0.4409"/>
+        <joint name="panda2_joint2" value="0.594"/>
+        <joint name="panda2_joint3" value="0.0945"/>
+        <joint name="panda2_joint4" value="-0.4694"/>
+        <joint name="panda2_joint5" value="-0.3149"/>
+        <joint name="panda2_joint6" value="2.5641"/>
+        <joint name="panda2_joint7" value="0"/>
+    </group_state>
+    <group_state name="shelf_0" group="panda_multi_arm">
+        <joint name="panda0_joint1" value="0.4"/>
+        <joint name="panda0_joint2" value="-1.3"/>
+        <joint name="panda0_joint3" value="0.4"/>
+        <joint name="panda0_joint4" value="-0.6"/>
+        <joint name="panda0_joint5" value="2.6"/>
+        <joint name="panda0_joint6" value="2"/>
+        <joint name="panda0_joint7" value="0"/>
+        <joint name="panda1_joint1" value="0.1"/>
+        <joint name="panda1_joint2" value="-0.4882"/>
+        <joint name="panda1_joint3" value="2.8973"/>
+        <joint name="panda1_joint4" value="0.0175"/>
+        <joint name="panda1_joint5" value="0"/>
+        <joint name="panda1_joint6" value="1.5485"/>
+        <joint name="panda1_joint7" value="0"/>
+        <joint name="panda2_joint1" value="-0.15"/>
+        <joint name="panda2_joint2" value="-1.3"/>
+        <joint name="panda2_joint3" value="0.4"/>
+        <joint name="panda2_joint4" value="-0.6"/>
+        <joint name="panda2_joint5" value="2.6"/>
+        <joint name="panda2_joint6" value="2"/>
+        <joint name="panda2_joint7" value="0"/>
+    </group_state>
+    <group_state name="shelf_1" group="panda_multi_arm">
+        <joint name="panda0_joint1" value="-2.8973"/>
+        <joint name="panda0_joint2" value="0.2441"/>
+        <joint name="panda0_joint3" value="0"/>
+        <joint name="panda0_joint4" value="-1.5034"/>
+        <joint name="panda0_joint5" value="2.6"/>
+        <joint name="panda0_joint6" value="3.0565"/>
+        <joint name="panda0_joint7" value="0"/>
+        <joint name="panda1_joint1" value="0.1"/>
+        <joint name="panda1_joint2" value="0.0542"/>
+        <joint name="panda1_joint3" value="2.8973"/>
+        <joint name="panda1_joint4" value="-2.2638"/>
+        <joint name="panda1_joint5" value="0"/>
+        <joint name="panda1_joint6" value="3.2015"/>
+        <joint name="panda1_joint7" value="0"/>
+        <joint name="panda2_joint1" value="2.8973"/>
+        <joint name="panda2_joint2" value="0.2441"/>
+        <joint name="panda2_joint3" value="0"/>
+        <joint name="panda2_joint4" value="-1.5034"/>
+        <joint name="panda2_joint5" value="2.6"/>
+        <joint name="panda2_joint6" value="3.0565"/>
+        <joint name="panda2_joint7" value="0"/>
+    </group_state>
+    <group_state name="shelf_2" group="panda_multi_arm">
+        <joint name="panda0_joint1" value="-2.8973"/>
+        <joint name="panda0_joint2" value="0.461"/>
+        <joint name="panda0_joint3" value="0"/>
+        <joint name="panda0_joint4" value="-1.7648"/>
+        <joint name="panda0_joint5" value="2.6"/>
+        <joint name="panda0_joint6" value="3.0565"/>
+        <joint name="panda0_joint7" value="0"/>
+        <joint name="panda1_joint1" value="0.1"/>
+        <joint name="panda1_joint2" value="-0.9763"/>
+        <joint name="panda1_joint3" value="2.8973"/>
+        <joint name="panda1_joint4" value="-1.337"/>
+        <joint name="panda1_joint5" value="0"/>
+        <joint name="panda1_joint6" value="3.2015"/>
+        <joint name="panda1_joint7" value="0"/>
+        <joint name="panda2_joint1" value="2.8973"/>
+        <joint name="panda2_joint2" value="0.461"/>
+        <joint name="panda2_joint3" value="0"/>
+        <joint name="panda2_joint4" value="-1.7648"/>
+        <joint name="panda2_joint5" value="2.6"/>
+        <joint name="panda2_joint6" value="3.0565"/>
+        <joint name="panda2_joint7" value="0"/>
+    </group_state>
+    <group_state name="shelf_3" group="panda_multi_arm">
+        <joint name="panda0_joint1" value="-2.8973"/>
+        <joint name="panda0_joint2" value="0.8136"/>
+        <joint name="panda0_joint3" value="0"/>
+        <joint name="panda0_joint4" value="-1.6935"/>
+        <joint name="panda0_joint5" value="2.6"/>
+        <joint name="panda0_joint6" value="3.0565"/>
+        <joint name="panda0_joint7" value="0"/>
+        <joint name="panda1_joint1" value="0.1"/>
+        <joint name="panda1_joint2" value="-0.8678"/>
+        <joint name="panda1_joint3" value="2.8973"/>
+        <joint name="panda1_joint4" value="-2.05"/>
+        <joint name="panda1_joint5" value="0"/>
+        <joint name="panda1_joint6" value="3.7235"/>
+        <joint name="panda1_joint7" value="0"/>
+        <joint name="panda2_joint1" value="2.8973"/>
+        <joint name="panda2_joint2" value="0.8136"/>
+        <joint name="panda2_joint3" value="0"/>
+        <joint name="panda2_joint4" value="-1.6935"/>
+        <joint name="panda2_joint5" value="2.6"/>
+        <joint name="panda2_joint6" value="3.0565"/>
+        <joint name="panda2_joint7" value="0"/>
+    </group_state>
+    <group_state name="shelf_multi_0" group="panda_multi_arm">
+        <joint name="panda0_joint1" value="-2.8973"/>
+        <joint name="panda0_joint2" value="0.461"/>
+        <joint name="panda0_joint3" value="0"/>
+        <joint name="panda0_joint4" value="-1.7648"/>
+        <joint name="panda0_joint5" value="2.6"/>
+        <joint name="panda0_joint6" value="3.0565"/>
+        <joint name="panda0_joint7" value="0"/>
+        <joint name="panda1_joint1" value="0.1"/>
+        <joint name="panda1_joint2" value="-0.4339"/>
+        <joint name="panda1_joint3" value="2.8973"/>
+        <joint name="panda1_joint4" value="-1.5984"/>
+        <joint name="panda1_joint5" value="0"/>
+        <joint name="panda1_joint6" value="3.2015"/>
+        <joint name="panda1_joint7" value="0"/>
+        <joint name="panda2_joint1" value="-0.0891"/>
+        <joint name="panda2_joint2" value="-1.3"/>
+        <joint name="panda2_joint3" value="0.4"/>
+        <joint name="panda2_joint4" value="-0.6"/>
+        <joint name="panda2_joint5" value="2.6"/>
+        <joint name="panda2_joint6" value="2"/>
+        <joint name="panda2_joint7" value="0"/>
+    </group_state>
+    <group_state name="shelf_multi_1" group="panda_multi_arm">
+        <joint name="panda0_joint1" value="-2.8973"/>
+        <joint name="panda0_joint2" value="0.461"/>
+        <joint name="panda0_joint3" value="0"/>
+        <joint name="panda0_joint4" value="-1.7648"/>
+        <joint name="panda0_joint5" value="2.6"/>
+        <joint name="panda0_joint6" value="3.0565"/>
+        <joint name="panda0_joint7" value="0"/>
+        <joint name="panda1_joint1" value="0.1"/>
+        <joint name="panda1_joint2" value="-0.8678"/>
+        <joint name="panda1_joint3" value="2.8973"/>
+        <joint name="panda1_joint4" value="-2.05"/>
+        <joint name="panda1_joint5" value="0"/>
+        <joint name="panda1_joint6" value="3.7235"/>
+        <joint name="panda1_joint7" value="0"/>
+        <joint name="panda2_joint1" value="2.8973"/>
+        <joint name="panda2_joint2" value="0.2441"/>
+        <joint name="panda2_joint3" value="0"/>
+        <joint name="panda2_joint4" value="-1.5034"/>
+        <joint name="panda2_joint5" value="2.6"/>
+        <joint name="panda2_joint6" value="3.0565"/>
+        <joint name="panda2_joint7" value="0"/>
+    </group_state>
+    <group_state name="shelf_multi_2" group="panda_multi_arm">
+        <joint name="panda0_joint1" value="-2.8973"/>
+        <joint name="panda0_joint2" value="0.461"/>
+        <joint name="panda0_joint3" value="0"/>
+        <joint name="panda0_joint4" value="-1.7648"/>
+        <joint name="panda0_joint5" value="2.6"/>
+        <joint name="panda0_joint6" value="3.0565"/>
+        <joint name="panda0_joint7" value="0"/>
+        <joint name="panda1_joint1" value="0.1"/>
+        <joint name="panda1_joint2" value="-0.4"/>
+        <joint name="panda1_joint3" value="2.8973"/>
+        <joint name="panda1_joint4" value="0.0175"/>
+        <joint name="panda1_joint5" value="0"/>
+        <joint name="panda1_joint6" value="1.5485"/>
+        <joint name="panda1_joint7" value="0"/>
+        <joint name="panda2_joint1" value="2.8973"/>
+        <joint name="panda2_joint2" value="0.8136"/>
+        <joint name="panda2_joint3" value="0"/>
+        <joint name="panda2_joint4" value="-1.6935"/>
+        <joint name="panda2_joint5" value="2.6"/>
+        <joint name="panda2_joint6" value="3.0565"/>
+        <joint name="panda2_joint7" value="0"/>
+    </group_state>
+    <group_state name="wall_0" group="panda_multi_arm">
+        <joint name="panda0_joint1" value="0.7393"/>
+        <joint name="panda0_joint2" value="1.1063"/>
+        <joint name="panda0_joint3" value="-0.9391"/>
+        <joint name="panda0_joint4" value="-1.0052"/>
+        <joint name="panda0_joint5" value="0"/>
+        <joint name="panda0_joint6" value="2.4005"/>
+        <joint name="panda0_joint7" value="0"/>
+        <joint name="panda1_joint1" value="0.3796"/>
+        <joint name="panda1_joint2" value="1.2279"/>
+        <joint name="panda1_joint3" value="0.4995"/>
+        <joint name="panda1_joint4" value="-0.2595"/>
+        <joint name="panda1_joint5" value="0"/>
+        <joint name="panda1_joint6" value="2.0105"/>
+        <joint name="panda1_joint7" value="0"/>
+        <joint name="panda2_joint1" value="0"/>
+        <joint name="panda2_joint2" value="0.4984"/>
+        <joint name="panda2_joint3" value="-0.6594"/>
+        <joint name="panda2_joint4" value="-0.9412"/>
+        <joint name="panda2_joint5" value="0"/>
+        <joint name="panda2_joint6" value="2.2185"/>
+        <joint name="panda2_joint7" value="0.2598"/>
+    </group_state>
+    <group_state name="wall_1" group="panda_multi_arm">
+        <joint name="panda0_joint1" value="0.7393"/>
+        <joint name="panda0_joint2" value="0.3039"/>
+        <joint name="panda0_joint3" value="-1.4187"/>
+        <joint name="panda0_joint4" value="-1.0052"/>
+        <joint name="panda0_joint5" value="0"/>
+        <joint name="panda0_joint6" value="1.9585"/>
+        <joint name="panda0_joint7" value="0"/>
+        <joint name="panda1_joint1" value="-0.02"/>
+        <joint name="panda1_joint2" value="1.471"/>
+        <joint name="panda1_joint3" value="0.4995"/>
+        <joint name="panda1_joint4" value="-0.2595"/>
+        <joint name="panda1_joint5" value="0"/>
+        <joint name="panda1_joint6" value="3.7525"/>
+        <joint name="panda1_joint7" value="0"/>
+        <joint name="panda2_joint1" value="0"/>
+        <joint name="panda2_joint2" value="0.62"/>
+        <joint name="panda2_joint3" value="0.7393"/>
+        <joint name="panda2_joint4" value="-1.3674"/>
+        <joint name="panda2_joint5" value="0"/>
+        <joint name="panda2_joint6" value="3.7525"/>
+        <joint name="panda2_joint7" value="0.2598"/>
+    </group_state>
+    <group_state name="wall_2" group="panda_multi_arm">
+        <joint name="panda0_joint1" value="1.2189"/>
+        <joint name="panda0_joint2" value="1.3738"/>
+        <joint name="panda0_joint3" value="-1.6984"/>
+        <joint name="panda0_joint4" value="-1.41"/>
+        <joint name="panda0_joint5" value="0"/>
+        <joint name="panda0_joint6" value="3.1025"/>
+        <joint name="panda0_joint7" value="0"/>
+        <joint name="panda1_joint1" value="-0.2997"/>
+        <joint name="panda1_joint2" value="1.471"/>
+        <joint name="panda1_joint3" value="0.4995"/>
+        <joint name="panda1_joint4" value="-0.2595"/>
+        <joint name="panda1_joint5" value="0"/>
+        <joint name="panda1_joint6" value="3.7525"/>
+        <joint name="panda1_joint7" value="0"/>
+        <joint name="panda2_joint1" value="-0.3796"/>
+        <joint name="panda2_joint2" value="0.62"/>
+        <joint name="panda2_joint3" value="0.7393"/>
+        <joint name="panda2_joint4" value="-1.3674"/>
+        <joint name="panda2_joint5" value="0"/>
+        <joint name="panda2_joint6" value="3.2065"/>
+        <joint name="panda2_joint7" value="0.2598"/>
+    </group_state>
+    <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
+    <end_effector name="hand0" parent_link="panda0_link8" group="panda0_hand"/>
+    <end_effector name="hand1" parent_link="panda1_link8" group="panda1_hand"/>
+    <end_effector name="hand2" parent_link="panda2_link8" group="panda2_hand"/>
+    <!--DISABLE COLLISIONS: By default it is assumed that any link of the robot could potentially come into collision with any other link in the robot. This tag disables collision checking between a specified pair of links. -->
+    <disable_collisions link1="back_plate" link2="base" reason="Adjacent"/>
+    <disable_collisions link1="back_plate" link2="left_side_plate" reason="Adjacent"/>
+    <disable_collisions link1="back_plate" link2="panda0_hand" reason="Never"/>
+    <disable_collisions link1="back_plate" link2="panda0_leftfinger" reason="Never"/>
+    <disable_collisions link1="back_plate" link2="panda0_link0" reason="Never"/>
+    <disable_collisions link1="back_plate" link2="panda0_link1" reason="Never"/>
+    <disable_collisions link1="back_plate" link2="panda0_link2" reason="Never"/>
+    <disable_collisions link1="back_plate" link2="panda0_link3" reason="Never"/>
+    <disable_collisions link1="back_plate" link2="panda0_link4" reason="Never"/>
+    <disable_collisions link1="back_plate" link2="panda0_link5" reason="Never"/>
+    <disable_collisions link1="back_plate" link2="panda0_link6" reason="Never"/>
+    <disable_collisions link1="back_plate" link2="panda0_link7" reason="Never"/>
+    <disable_collisions link1="back_plate" link2="panda0_rightfinger" reason="Never"/>
+    <disable_collisions link1="back_plate" link2="panda1_hand" reason="Never"/>
+    <disable_collisions link1="back_plate" link2="panda1_leftfinger" reason="Never"/>
+    <disable_collisions link1="back_plate" link2="panda1_link0" reason="Never"/>
+    <disable_collisions link1="back_plate" link2="panda1_link1" reason="Never"/>
+    <disable_collisions link1="back_plate" link2="panda1_link2" reason="Never"/>
+    <disable_collisions link1="back_plate" link2="panda1_link3" reason="Never"/>
+    <disable_collisions link1="back_plate" link2="panda1_link4" reason="Never"/>
+    <disable_collisions link1="back_plate" link2="panda1_link5" reason="Never"/>
+    <disable_collisions link1="back_plate" link2="panda1_link6" reason="Never"/>
+    <disable_collisions link1="back_plate" link2="panda1_link7" reason="Never"/>
+    <disable_collisions link1="back_plate" link2="panda1_rightfinger" reason="Never"/>
+    <disable_collisions link1="back_plate" link2="panda2_hand" reason="Never"/>
+    <disable_collisions link1="back_plate" link2="panda2_leftfinger" reason="Never"/>
+    <disable_collisions link1="back_plate" link2="panda2_link0" reason="Never"/>
+    <disable_collisions link1="back_plate" link2="panda2_link1" reason="Never"/>
+    <disable_collisions link1="back_plate" link2="panda2_link2" reason="Never"/>
+    <disable_collisions link1="back_plate" link2="panda2_link3" reason="Never"/>
+    <disable_collisions link1="back_plate" link2="panda2_link4" reason="Never"/>
+    <disable_collisions link1="back_plate" link2="panda2_link5" reason="Never"/>
+    <disable_collisions link1="back_plate" link2="panda2_link6" reason="Never"/>
+    <disable_collisions link1="back_plate" link2="panda2_link7" reason="Never"/>
+    <disable_collisions link1="back_plate" link2="panda2_rightfinger" reason="Never"/>
+    <disable_collisions link1="back_plate" link2="right_side_plate" reason="Adjacent"/>
+    <disable_collisions link1="back_plate" link2="shelf0" reason="Adjacent"/>
+    <disable_collisions link1="back_plate" link2="shelf1" reason="Adjacent"/>
+    <disable_collisions link1="back_plate" link2="shelf2" reason="Adjacent"/>
+    <disable_collisions link1="back_plate" link2="shelf3" reason="Adjacent"/>
+    <disable_collisions link1="back_plate" link2="shelf4" reason="Adjacent"/>
+    <disable_collisions link1="back_plate" link2="wall" reason="Never"/>
+    <disable_collisions link1="base" link2="left_side_plate" reason="Default"/>
+    <disable_collisions link1="base" link2="panda0_link0" reason="Adjacent"/>
+    <disable_collisions link1="base" link2="panda0_link1" reason="Never"/>
+    <disable_collisions link1="base" link2="panda0_link2" reason="Never"/>
+    <disable_collisions link1="base" link2="panda0_link3" reason="Never"/>
+    <disable_collisions link1="base" link2="panda0_link4" reason="Never"/>
+    <disable_collisions link1="base" link2="panda1_link0" reason="Adjacent"/>
+    <disable_collisions link1="base" link2="panda1_link1" reason="Never"/>
+    <disable_collisions link1="base" link2="panda1_link2" reason="Never"/>
+    <disable_collisions link1="base" link2="panda1_link3" reason="Never"/>
+    <disable_collisions link1="base" link2="panda1_link4" reason="Never"/>
+    <disable_collisions link1="base" link2="panda2_link0" reason="Adjacent"/>
+    <disable_collisions link1="base" link2="panda2_link1" reason="Never"/>
+    <disable_collisions link1="base" link2="panda2_link2" reason="Never"/>
+    <disable_collisions link1="base" link2="panda2_link3" reason="Never"/>
+    <disable_collisions link1="base" link2="panda2_link4" reason="Never"/>
+    <disable_collisions link1="base" link2="right_side_plate" reason="Default"/>
+    <disable_collisions link1="base" link2="shelf0" reason="Default"/>
+    <disable_collisions link1="base" link2="shelf1" reason="Never"/>
+    <disable_collisions link1="base" link2="shelf2" reason="Never"/>
+    <disable_collisions link1="base" link2="shelf3" reason="Never"/>
+    <disable_collisions link1="base" link2="shelf4" reason="Never"/>
+    <disable_collisions link1="base" link2="wall" reason="Adjacent"/>
+    <disable_collisions link1="left_side_plate" link2="panda0_link0" reason="Never"/>
+    <disable_collisions link1="left_side_plate" link2="panda0_link1" reason="Never"/>
+    <disable_collisions link1="left_side_plate" link2="panda0_link2" reason="Never"/>
+    <disable_collisions link1="left_side_plate" link2="panda0_link3" reason="Never"/>
+    <disable_collisions link1="left_side_plate" link2="panda0_link4" reason="Never"/>
+    <disable_collisions link1="left_side_plate" link2="panda1_link0" reason="Never"/>
+    <disable_collisions link1="left_side_plate" link2="panda1_link1" reason="Never"/>
+    <disable_collisions link1="left_side_plate" link2="panda1_link2" reason="Never"/>
+    <disable_collisions link1="left_side_plate" link2="panda1_link3" reason="Never"/>
+    <disable_collisions link1="left_side_plate" link2="panda1_link4" reason="Never"/>
+    <disable_collisions link1="left_side_plate" link2="panda2_hand" reason="Never"/>
+    <disable_collisions link1="left_side_plate" link2="panda2_leftfinger" reason="Never"/>
+    <disable_collisions link1="left_side_plate" link2="panda2_link0" reason="Never"/>
+    <disable_collisions link1="left_side_plate" link2="panda2_link1" reason="Never"/>
+    <disable_collisions link1="left_side_plate" link2="panda2_link2" reason="Never"/>
+    <disable_collisions link1="left_side_plate" link2="panda2_link3" reason="Never"/>
+    <disable_collisions link1="left_side_plate" link2="panda2_link4" reason="Never"/>
+    <disable_collisions link1="left_side_plate" link2="panda2_link5" reason="Never"/>
+    <disable_collisions link1="left_side_plate" link2="panda2_link6" reason="Never"/>
+    <disable_collisions link1="left_side_plate" link2="panda2_link7" reason="Never"/>
+    <disable_collisions link1="left_side_plate" link2="panda2_rightfinger" reason="Never"/>
+    <disable_collisions link1="left_side_plate" link2="right_side_plate" reason="Never"/>
+    <disable_collisions link1="left_side_plate" link2="shelf0" reason="Default"/>
+    <disable_collisions link1="left_side_plate" link2="shelf1" reason="Default"/>
+    <disable_collisions link1="left_side_plate" link2="shelf2" reason="Default"/>
+    <disable_collisions link1="left_side_plate" link2="shelf3" reason="Default"/>
+    <disable_collisions link1="left_side_plate" link2="shelf4" reason="Default"/>
+    <disable_collisions link1="left_side_plate" link2="wall" reason="Never"/>
+    <disable_collisions link1="panda0_hand" link2="panda0_leftfinger" reason="Adjacent"/>
+    <disable_collisions link1="panda0_hand" link2="panda0_link3" reason="Never"/>
+    <disable_collisions link1="panda0_hand" link2="panda0_link4" reason="Never"/>
+    <disable_collisions link1="panda0_hand" link2="panda0_link6" reason="Never"/>
+    <disable_collisions link1="panda0_hand" link2="panda0_link7" reason="Adjacent"/>
+    <disable_collisions link1="panda0_hand" link2="panda0_rightfinger" reason="Adjacent"/>
+    <disable_collisions link1="panda0_hand" link2="right_side_plate" reason="Never"/>
+    <disable_collisions link1="panda0_hand" link2="wall" reason="Never"/>
+    <disable_collisions link1="panda0_leftfinger" link2="panda0_link3" reason="Never"/>
+    <disable_collisions link1="panda0_leftfinger" link2="panda0_link4" reason="Never"/>
+    <disable_collisions link1="panda0_leftfinger" link2="panda0_link6" reason="Never"/>
+    <disable_collisions link1="panda0_leftfinger" link2="panda0_link7" reason="Never"/>
+    <disable_collisions link1="panda0_leftfinger" link2="panda0_rightfinger" reason="Default"/>
+    <disable_collisions link1="panda0_leftfinger" link2="right_side_plate" reason="Never"/>
+    <disable_collisions link1="panda0_leftfinger" link2="wall" reason="Never"/>
+    <disable_collisions link1="panda0_link0" link2="panda0_link1" reason="Adjacent"/>
+    <disable_collisions link1="panda0_link0" link2="panda0_link2" reason="Never"/>
+    <disable_collisions link1="panda0_link0" link2="panda0_link3" reason="Never"/>
+    <disable_collisions link1="panda0_link0" link2="panda0_link4" reason="Never"/>
+    <disable_collisions link1="panda0_link0" link2="panda1_link0" reason="Never"/>
+    <disable_collisions link1="panda0_link0" link2="panda1_link1" reason="Never"/>
+    <disable_collisions link1="panda0_link0" link2="panda1_link2" reason="Never"/>
+    <disable_collisions link1="panda0_link0" link2="panda1_link3" reason="Never"/>
+    <disable_collisions link1="panda0_link0" link2="panda2_link0" reason="Never"/>
+    <disable_collisions link1="panda0_link0" link2="panda2_link1" reason="Never"/>
+    <disable_collisions link1="panda0_link0" link2="panda2_link2" reason="Never"/>
+    <disable_collisions link1="panda0_link0" link2="panda2_link3" reason="Never"/>
+    <disable_collisions link1="panda0_link0" link2="panda2_link4" reason="Never"/>
+    <disable_collisions link1="panda0_link0" link2="right_side_plate" reason="Never"/>
+    <disable_collisions link1="panda0_link0" link2="shelf0" reason="Never"/>
+    <disable_collisions link1="panda0_link0" link2="shelf1" reason="Never"/>
+    <disable_collisions link1="panda0_link0" link2="shelf2" reason="Never"/>
+    <disable_collisions link1="panda0_link0" link2="shelf3" reason="Never"/>
+    <disable_collisions link1="panda0_link0" link2="shelf4" reason="Never"/>
+    <disable_collisions link1="panda0_link0" link2="wall" reason="Never"/>
+    <disable_collisions link1="panda0_link1" link2="panda0_link2" reason="Adjacent"/>
+    <disable_collisions link1="panda0_link1" link2="panda0_link3" reason="Never"/>
+    <disable_collisions link1="panda0_link1" link2="panda0_link4" reason="Never"/>
+    <disable_collisions link1="panda0_link1" link2="panda1_link0" reason="Never"/>
+    <disable_collisions link1="panda0_link1" link2="panda1_link1" reason="Never"/>
+    <disable_collisions link1="panda0_link1" link2="panda1_link2" reason="Never"/>
+    <disable_collisions link1="panda0_link1" link2="panda2_link0" reason="Never"/>
+    <disable_collisions link1="panda0_link1" link2="panda2_link1" reason="Never"/>
+    <disable_collisions link1="panda0_link1" link2="panda2_link2" reason="Never"/>
+    <disable_collisions link1="panda0_link1" link2="panda2_link3" reason="Never"/>
+    <disable_collisions link1="panda0_link1" link2="panda2_link4" reason="Never"/>
+    <disable_collisions link1="panda0_link1" link2="right_side_plate" reason="Never"/>
+    <disable_collisions link1="panda0_link1" link2="shelf0" reason="Never"/>
+    <disable_collisions link1="panda0_link1" link2="shelf1" reason="Never"/>
+    <disable_collisions link1="panda0_link1" link2="shelf2" reason="Never"/>
+    <disable_collisions link1="panda0_link1" link2="shelf3" reason="Never"/>
+    <disable_collisions link1="panda0_link1" link2="shelf4" reason="Never"/>
+    <disable_collisions link1="panda0_link1" link2="wall" reason="Never"/>
+    <disable_collisions link1="panda0_link2" link2="panda0_link3" reason="Adjacent"/>
+    <disable_collisions link1="panda0_link2" link2="panda0_link4" reason="Never"/>
+    <disable_collisions link1="panda0_link2" link2="panda1_link0" reason="Never"/>
+    <disable_collisions link1="panda0_link2" link2="panda1_link1" reason="Never"/>
+    <disable_collisions link1="panda0_link2" link2="panda2_link0" reason="Never"/>
+    <disable_collisions link1="panda0_link2" link2="panda2_link1" reason="Never"/>
+    <disable_collisions link1="panda0_link2" link2="panda2_link2" reason="Never"/>
+    <disable_collisions link1="panda0_link2" link2="panda2_link3" reason="Never"/>
+    <disable_collisions link1="panda0_link2" link2="panda2_link4" reason="Never"/>
+    <disable_collisions link1="panda0_link2" link2="right_side_plate" reason="Never"/>
+    <disable_collisions link1="panda0_link2" link2="shelf0" reason="Never"/>
+    <disable_collisions link1="panda0_link2" link2="shelf1" reason="Never"/>
+    <disable_collisions link1="panda0_link2" link2="shelf2" reason="Never"/>
+    <disable_collisions link1="panda0_link2" link2="shelf3" reason="Never"/>
+    <disable_collisions link1="panda0_link2" link2="shelf4" reason="Never"/>
+    <disable_collisions link1="panda0_link2" link2="wall" reason="Never"/>
+    <disable_collisions link1="panda0_link3" link2="panda0_link4" reason="Adjacent"/>
+    <disable_collisions link1="panda0_link3" link2="panda0_link5" reason="Never"/>
+    <disable_collisions link1="panda0_link3" link2="panda0_link6" reason="Never"/>
+    <disable_collisions link1="panda0_link3" link2="panda0_link7" reason="Never"/>
+    <disable_collisions link1="panda0_link3" link2="panda0_rightfinger" reason="Never"/>
+    <disable_collisions link1="panda0_link3" link2="panda1_link0" reason="Never"/>
+    <disable_collisions link1="panda0_link3" link2="panda2_link0" reason="Never"/>
+    <disable_collisions link1="panda0_link3" link2="panda2_link1" reason="Never"/>
+    <disable_collisions link1="panda0_link3" link2="panda2_link2" reason="Never"/>
+    <disable_collisions link1="panda0_link3" link2="panda2_link3" reason="Never"/>
+    <disable_collisions link1="panda0_link3" link2="right_side_plate" reason="Never"/>
+    <disable_collisions link1="panda0_link3" link2="shelf0" reason="Never"/>
+    <disable_collisions link1="panda0_link3" link2="shelf1" reason="Never"/>
+    <disable_collisions link1="panda0_link3" link2="shelf2" reason="Never"/>
+    <disable_collisions link1="panda0_link3" link2="shelf3" reason="Never"/>
+    <disable_collisions link1="panda0_link3" link2="shelf4" reason="Never"/>
+    <disable_collisions link1="panda0_link3" link2="wall" reason="Never"/>
+    <disable_collisions link1="panda0_link4" link2="panda0_link5" reason="Adjacent"/>
+    <disable_collisions link1="panda0_link4" link2="panda0_link6" reason="Never"/>
+    <disable_collisions link1="panda0_link4" link2="panda0_link7" reason="Never"/>
+    <disable_collisions link1="panda0_link4" link2="panda0_rightfinger" reason="Never"/>
+    <disable_collisions link1="panda0_link4" link2="panda2_link0" reason="Never"/>
+    <disable_collisions link1="panda0_link4" link2="panda2_link1" reason="Never"/>
+    <disable_collisions link1="panda0_link4" link2="panda2_link2" reason="Never"/>
+    <disable_collisions link1="panda0_link4" link2="right_side_plate" reason="Never"/>
+    <disable_collisions link1="panda0_link4" link2="shelf0" reason="Never"/>
+    <disable_collisions link1="panda0_link4" link2="shelf1" reason="Never"/>
+    <disable_collisions link1="panda0_link4" link2="shelf2" reason="Never"/>
+    <disable_collisions link1="panda0_link4" link2="shelf3" reason="Never"/>
+    <disable_collisions link1="panda0_link4" link2="shelf4" reason="Never"/>
+    <disable_collisions link1="panda0_link4" link2="wall" reason="Never"/>
+    <disable_collisions link1="panda0_link5" link2="panda0_link6" reason="Adjacent"/>
+    <disable_collisions link1="panda0_link5" link2="panda0_link7" reason="Default"/>
+    <disable_collisions link1="panda0_link5" link2="right_side_plate" reason="Never"/>
+    <disable_collisions link1="panda0_link5" link2="shelf4" reason="Never"/>
+    <disable_collisions link1="panda0_link5" link2="wall" reason="Never"/>
+    <disable_collisions link1="panda0_link6" link2="panda0_link7" reason="Adjacent"/>
+    <disable_collisions link1="panda0_link6" link2="panda0_rightfinger" reason="Never"/>
+    <disable_collisions link1="panda0_link6" link2="right_side_plate" reason="Never"/>
+    <disable_collisions link1="panda0_link6" link2="wall" reason="Never"/>
+    <disable_collisions link1="panda0_link7" link2="panda0_rightfinger" reason="Never"/>
+    <disable_collisions link1="panda0_link7" link2="right_side_plate" reason="Never"/>
+    <disable_collisions link1="panda0_link7" link2="wall" reason="Never"/>
+    <disable_collisions link1="panda0_rightfinger" link2="right_side_plate" reason="Never"/>
+    <disable_collisions link1="panda0_rightfinger" link2="wall" reason="Never"/>
+    <disable_collisions link1="panda1_hand" link2="panda1_leftfinger" reason="Adjacent"/>
+    <disable_collisions link1="panda1_hand" link2="panda1_link3" reason="Never"/>
+    <disable_collisions link1="panda1_hand" link2="panda1_link4" reason="Never"/>
+    <disable_collisions link1="panda1_hand" link2="panda1_link6" reason="Never"/>
+    <disable_collisions link1="panda1_hand" link2="panda1_link7" reason="Adjacent"/>
+    <disable_collisions link1="panda1_hand" link2="panda1_rightfinger" reason="Adjacent"/>
+    <disable_collisions link1="panda1_hand" link2="wall" reason="Never"/>
+    <disable_collisions link1="panda1_leftfinger" link2="panda1_link3" reason="Never"/>
+    <disable_collisions link1="panda1_leftfinger" link2="panda1_link4" reason="Never"/>
+    <disable_collisions link1="panda1_leftfinger" link2="panda1_link6" reason="Never"/>
+    <disable_collisions link1="panda1_leftfinger" link2="panda1_link7" reason="Never"/>
+    <disable_collisions link1="panda1_leftfinger" link2="panda1_rightfinger" reason="Default"/>
+    <disable_collisions link1="panda1_leftfinger" link2="wall" reason="Never"/>
+    <disable_collisions link1="panda1_link0" link2="panda1_link1" reason="Adjacent"/>
+    <disable_collisions link1="panda1_link0" link2="panda1_link2" reason="Never"/>
+    <disable_collisions link1="panda1_link0" link2="panda1_link3" reason="Never"/>
+    <disable_collisions link1="panda1_link0" link2="panda1_link4" reason="Never"/>
+    <disable_collisions link1="panda1_link0" link2="panda2_link0" reason="Never"/>
+    <disable_collisions link1="panda1_link0" link2="panda2_link1" reason="Never"/>
+    <disable_collisions link1="panda1_link0" link2="panda2_link2" reason="Never"/>
+    <disable_collisions link1="panda1_link0" link2="panda2_link3" reason="Never"/>
+    <disable_collisions link1="panda1_link0" link2="right_side_plate" reason="Never"/>
+    <disable_collisions link1="panda1_link0" link2="shelf0" reason="Never"/>
+    <disable_collisions link1="panda1_link0" link2="shelf1" reason="Never"/>
+    <disable_collisions link1="panda1_link0" link2="shelf2" reason="Never"/>
+    <disable_collisions link1="panda1_link0" link2="shelf3" reason="Never"/>
+    <disable_collisions link1="panda1_link0" link2="shelf4" reason="Never"/>
+    <disable_collisions link1="panda1_link0" link2="wall" reason="Never"/>
+    <disable_collisions link1="panda1_link1" link2="panda1_link2" reason="Adjacent"/>
+    <disable_collisions link1="panda1_link1" link2="panda1_link3" reason="Never"/>
+    <disable_collisions link1="panda1_link1" link2="panda1_link4" reason="Never"/>
+    <disable_collisions link1="panda1_link1" link2="panda2_link0" reason="Never"/>
+    <disable_collisions link1="panda1_link1" link2="panda2_link1" reason="Never"/>
+    <disable_collisions link1="panda1_link1" link2="panda2_link2" reason="Never"/>
+    <disable_collisions link1="panda1_link1" link2="right_side_plate" reason="Never"/>
+    <disable_collisions link1="panda1_link1" link2="shelf0" reason="Never"/>
+    <disable_collisions link1="panda1_link1" link2="shelf1" reason="Never"/>
+    <disable_collisions link1="panda1_link1" link2="shelf2" reason="Never"/>
+    <disable_collisions link1="panda1_link1" link2="shelf3" reason="Never"/>
+    <disable_collisions link1="panda1_link1" link2="shelf4" reason="Never"/>
+    <disable_collisions link1="panda1_link1" link2="wall" reason="Never"/>
+    <disable_collisions link1="panda1_link2" link2="panda1_link3" reason="Adjacent"/>
+    <disable_collisions link1="panda1_link2" link2="panda1_link4" reason="Never"/>
+    <disable_collisions link1="panda1_link2" link2="panda2_link0" reason="Never"/>
+    <disable_collisions link1="panda1_link2" link2="panda2_link1" reason="Never"/>
+    <disable_collisions link1="panda1_link2" link2="right_side_plate" reason="Never"/>
+    <disable_collisions link1="panda1_link2" link2="shelf0" reason="Never"/>
+    <disable_collisions link1="panda1_link2" link2="shelf1" reason="Never"/>
+    <disable_collisions link1="panda1_link2" link2="shelf2" reason="Never"/>
+    <disable_collisions link1="panda1_link2" link2="shelf3" reason="Never"/>
+    <disable_collisions link1="panda1_link2" link2="shelf4" reason="Never"/>
+    <disable_collisions link1="panda1_link2" link2="wall" reason="Never"/>
+    <disable_collisions link1="panda1_link3" link2="panda1_link4" reason="Adjacent"/>
+    <disable_collisions link1="panda1_link3" link2="panda1_link5" reason="Never"/>
+    <disable_collisions link1="panda1_link3" link2="panda1_link6" reason="Never"/>
+    <disable_collisions link1="panda1_link3" link2="panda1_link7" reason="Never"/>
+    <disable_collisions link1="panda1_link3" link2="panda1_rightfinger" reason="Never"/>
+    <disable_collisions link1="panda1_link3" link2="panda2_link0" reason="Never"/>
+    <disable_collisions link1="panda1_link3" link2="right_side_plate" reason="Never"/>
+    <disable_collisions link1="panda1_link3" link2="shelf0" reason="Never"/>
+    <disable_collisions link1="panda1_link3" link2="shelf1" reason="Never"/>
+    <disable_collisions link1="panda1_link3" link2="shelf2" reason="Never"/>
+    <disable_collisions link1="panda1_link3" link2="shelf3" reason="Never"/>
+    <disable_collisions link1="panda1_link3" link2="shelf4" reason="Never"/>
+    <disable_collisions link1="panda1_link3" link2="wall" reason="Never"/>
+    <disable_collisions link1="panda1_link4" link2="panda1_link5" reason="Adjacent"/>
+    <disable_collisions link1="panda1_link4" link2="panda1_link6" reason="Never"/>
+    <disable_collisions link1="panda1_link4" link2="panda1_link7" reason="Never"/>
+    <disable_collisions link1="panda1_link4" link2="panda1_rightfinger" reason="Never"/>
+    <disable_collisions link1="panda1_link4" link2="right_side_plate" reason="Never"/>
+    <disable_collisions link1="panda1_link4" link2="shelf0" reason="Never"/>
+    <disable_collisions link1="panda1_link4" link2="shelf1" reason="Never"/>
+    <disable_collisions link1="panda1_link4" link2="shelf2" reason="Never"/>
+    <disable_collisions link1="panda1_link4" link2="shelf3" reason="Never"/>
+    <disable_collisions link1="panda1_link4" link2="shelf4" reason="Never"/>
+    <disable_collisions link1="panda1_link4" link2="wall" reason="Never"/>
+    <disable_collisions link1="panda1_link5" link2="panda1_link6" reason="Adjacent"/>
+    <disable_collisions link1="panda1_link5" link2="panda1_link7" reason="Default"/>
+    <disable_collisions link1="panda1_link5" link2="shelf0" reason="Never"/>
+    <disable_collisions link1="panda1_link5" link2="shelf4" reason="Never"/>
+    <disable_collisions link1="panda1_link5" link2="wall" reason="Never"/>
+    <disable_collisions link1="panda1_link6" link2="panda1_link7" reason="Adjacent"/>
+    <disable_collisions link1="panda1_link6" link2="panda1_rightfinger" reason="Never"/>
+    <disable_collisions link1="panda1_link6" link2="wall" reason="Never"/>
+    <disable_collisions link1="panda1_link7" link2="panda1_rightfinger" reason="Never"/>
+    <disable_collisions link1="panda1_link7" link2="wall" reason="Never"/>
+    <disable_collisions link1="panda1_rightfinger" link2="wall" reason="Never"/>
+    <disable_collisions link1="panda2_hand" link2="panda2_leftfinger" reason="Adjacent"/>
+    <disable_collisions link1="panda2_hand" link2="panda2_link3" reason="Never"/>
+    <disable_collisions link1="panda2_hand" link2="panda2_link4" reason="Never"/>
+    <disable_collisions link1="panda2_hand" link2="panda2_link6" reason="Never"/>
+    <disable_collisions link1="panda2_hand" link2="panda2_link7" reason="Adjacent"/>
+    <disable_collisions link1="panda2_hand" link2="panda2_rightfinger" reason="Adjacent"/>
+    <disable_collisions link1="panda2_hand" link2="wall" reason="Never"/>
+    <disable_collisions link1="panda2_leftfinger" link2="panda2_link3" reason="Never"/>
+    <disable_collisions link1="panda2_leftfinger" link2="panda2_link4" reason="Never"/>
+    <disable_collisions link1="panda2_leftfinger" link2="panda2_link6" reason="Never"/>
+    <disable_collisions link1="panda2_leftfinger" link2="panda2_link7" reason="Never"/>
+    <disable_collisions link1="panda2_leftfinger" link2="panda2_rightfinger" reason="Default"/>
+    <disable_collisions link1="panda2_leftfinger" link2="wall" reason="Never"/>
+    <disable_collisions link1="panda2_link0" link2="panda2_link1" reason="Adjacent"/>
+    <disable_collisions link1="panda2_link0" link2="panda2_link2" reason="Never"/>
+    <disable_collisions link1="panda2_link0" link2="panda2_link3" reason="Never"/>
+    <disable_collisions link1="panda2_link0" link2="panda2_link4" reason="Never"/>
+    <disable_collisions link1="panda2_link0" link2="right_side_plate" reason="Never"/>
+    <disable_collisions link1="panda2_link0" link2="shelf0" reason="Never"/>
+    <disable_collisions link1="panda2_link0" link2="shelf1" reason="Never"/>
+    <disable_collisions link1="panda2_link0" link2="shelf2" reason="Never"/>
+    <disable_collisions link1="panda2_link0" link2="shelf3" reason="Never"/>
+    <disable_collisions link1="panda2_link0" link2="shelf4" reason="Never"/>
+    <disable_collisions link1="panda2_link0" link2="wall" reason="Never"/>
+    <disable_collisions link1="panda2_link1" link2="panda2_link2" reason="Adjacent"/>
+    <disable_collisions link1="panda2_link1" link2="panda2_link3" reason="Never"/>
+    <disable_collisions link1="panda2_link1" link2="panda2_link4" reason="Never"/>
+    <disable_collisions link1="panda2_link1" link2="right_side_plate" reason="Never"/>
+    <disable_collisions link1="panda2_link1" link2="shelf0" reason="Never"/>
+    <disable_collisions link1="panda2_link1" link2="shelf1" reason="Never"/>
+    <disable_collisions link1="panda2_link1" link2="shelf2" reason="Never"/>
+    <disable_collisions link1="panda2_link1" link2="shelf3" reason="Never"/>
+    <disable_collisions link1="panda2_link1" link2="shelf4" reason="Never"/>
+    <disable_collisions link1="panda2_link1" link2="wall" reason="Never"/>
+    <disable_collisions link1="panda2_link2" link2="panda2_link3" reason="Adjacent"/>
+    <disable_collisions link1="panda2_link2" link2="panda2_link4" reason="Never"/>
+    <disable_collisions link1="panda2_link2" link2="right_side_plate" reason="Never"/>
+    <disable_collisions link1="panda2_link2" link2="shelf0" reason="Never"/>
+    <disable_collisions link1="panda2_link2" link2="shelf1" reason="Never"/>
+    <disable_collisions link1="panda2_link2" link2="shelf2" reason="Never"/>
+    <disable_collisions link1="panda2_link2" link2="shelf3" reason="Never"/>
+    <disable_collisions link1="panda2_link2" link2="shelf4" reason="Never"/>
+    <disable_collisions link1="panda2_link2" link2="wall" reason="Never"/>
+    <disable_collisions link1="panda2_link3" link2="panda2_link4" reason="Adjacent"/>
+    <disable_collisions link1="panda2_link3" link2="panda2_link5" reason="Never"/>
+    <disable_collisions link1="panda2_link3" link2="panda2_link6" reason="Never"/>
+    <disable_collisions link1="panda2_link3" link2="panda2_link7" reason="Never"/>
+    <disable_collisions link1="panda2_link3" link2="panda2_rightfinger" reason="Never"/>
+    <disable_collisions link1="panda2_link3" link2="right_side_plate" reason="Never"/>
+    <disable_collisions link1="panda2_link3" link2="shelf0" reason="Never"/>
+    <disable_collisions link1="panda2_link3" link2="shelf1" reason="Never"/>
+    <disable_collisions link1="panda2_link3" link2="shelf2" reason="Never"/>
+    <disable_collisions link1="panda2_link3" link2="shelf3" reason="Never"/>
+    <disable_collisions link1="panda2_link3" link2="shelf4" reason="Never"/>
+    <disable_collisions link1="panda2_link3" link2="wall" reason="Never"/>
+    <disable_collisions link1="panda2_link4" link2="panda2_link5" reason="Adjacent"/>
+    <disable_collisions link1="panda2_link4" link2="panda2_link6" reason="Never"/>
+    <disable_collisions link1="panda2_link4" link2="panda2_link7" reason="Never"/>
+    <disable_collisions link1="panda2_link4" link2="panda2_rightfinger" reason="Never"/>
+    <disable_collisions link1="panda2_link4" link2="right_side_plate" reason="Never"/>
+    <disable_collisions link1="panda2_link4" link2="shelf0" reason="Never"/>
+    <disable_collisions link1="panda2_link4" link2="shelf1" reason="Never"/>
+    <disable_collisions link1="panda2_link4" link2="shelf2" reason="Never"/>
+    <disable_collisions link1="panda2_link4" link2="shelf3" reason="Never"/>
+    <disable_collisions link1="panda2_link4" link2="shelf4" reason="Never"/>
+    <disable_collisions link1="panda2_link4" link2="wall" reason="Never"/>
+    <disable_collisions link1="panda2_link5" link2="panda2_link6" reason="Adjacent"/>
+    <disable_collisions link1="panda2_link5" link2="panda2_link7" reason="Default"/>
+    <disable_collisions link1="panda2_link5" link2="shelf0" reason="Never"/>
+    <disable_collisions link1="panda2_link5" link2="shelf4" reason="Never"/>
+    <disable_collisions link1="panda2_link5" link2="wall" reason="Never"/>
+    <disable_collisions link1="panda2_link6" link2="panda2_link7" reason="Adjacent"/>
+    <disable_collisions link1="panda2_link6" link2="panda2_rightfinger" reason="Never"/>
+    <disable_collisions link1="panda2_link6" link2="wall" reason="Never"/>
+    <disable_collisions link1="panda2_link7" link2="panda2_rightfinger" reason="Never"/>
+    <disable_collisions link1="panda2_link7" link2="wall" reason="Never"/>
+    <disable_collisions link1="panda2_rightfinger" link2="wall" reason="Never"/>
+    <disable_collisions link1="right_side_plate" link2="shelf0" reason="Default"/>
+    <disable_collisions link1="right_side_plate" link2="shelf1" reason="Default"/>
+    <disable_collisions link1="right_side_plate" link2="shelf2" reason="Default"/>
+    <disable_collisions link1="right_side_plate" link2="shelf3" reason="Default"/>
+    <disable_collisions link1="right_side_plate" link2="shelf4" reason="Default"/>
+    <disable_collisions link1="right_side_plate" link2="wall" reason="Never"/>
+    <disable_collisions link1="shelf0" link2="shelf1" reason="Never"/>
+    <disable_collisions link1="shelf0" link2="shelf2" reason="Never"/>
+    <disable_collisions link1="shelf0" link2="shelf3" reason="Never"/>
+    <disable_collisions link1="shelf0" link2="shelf4" reason="Never"/>
+    <disable_collisions link1="shelf0" link2="wall" reason="Never"/>
+    <disable_collisions link1="shelf1" link2="shelf2" reason="Never"/>
+    <disable_collisions link1="shelf1" link2="shelf3" reason="Never"/>
+    <disable_collisions link1="shelf1" link2="shelf4" reason="Never"/>
+    <disable_collisions link1="shelf1" link2="wall" reason="Never"/>
+    <disable_collisions link1="shelf2" link2="shelf3" reason="Never"/>
+    <disable_collisions link1="shelf2" link2="shelf4" reason="Never"/>
+    <disable_collisions link1="shelf2" link2="wall" reason="Never"/>
+    <disable_collisions link1="shelf3" link2="shelf4" reason="Never"/>
+    <disable_collisions link1="shelf3" link2="wall" reason="Never"/>
+    <disable_collisions link1="shelf4" link2="wall" reason="Never"/>
+</robot>

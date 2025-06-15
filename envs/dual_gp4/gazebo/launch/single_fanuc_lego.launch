@@ -1,0 +1,24 @@
+<launch>
+    <!-- these are the arguments you can pass this launch file, for example paused:=true -->
+    <arg name="paused" default="false"/>
+    <arg name="use_sim_time" default="true"/>
+    <arg name="gui" default="true"/>
+    <arg name="headless" default="false"/>
+    <arg name="debug" default="false"/>
+    <arg name="namespace" default="/fanuc_gazebo/"/>
+    <arg name="launch_world" default="true"/>
+
+    <include file="$(find robot_digital_twin)/launch/lego_setup.launch"/>
+    
+    <include
+        file="$(find robot_digital_twin)/launch/fanuc.launch">
+        <arg name="namespace" value="$(arg namespace)"/>
+        <arg name="launch_world" value="true"/>
+        <arg name="x" value="0"/>
+        <arg name="y" value="0"/>
+        <arg name="z" value="0"/>
+        <arg name="roll" value="0"/>
+        <arg name="pitch" value="0"/>
+        <arg name="yaw" value="0"/>
+    </include>
+</launch>

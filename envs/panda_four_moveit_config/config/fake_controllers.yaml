@@ -1,0 +1,107 @@
+controller_list:
+  - name: fake_panda0_arm_controller
+    type: $(arg fake_execution_type)
+    joints:
+      - panda0_joint1
+      - panda0_joint2
+      - panda0_joint3
+      - panda0_joint4
+      - panda0_joint5
+      - panda0_joint6
+      - panda0_joint7
+  - name: fake_panda0_hand_controller
+    type: $(arg fake_execution_type)
+    joints:
+      - panda0_finger_joint1
+  - name: fake_panda1_arm_controller
+    type: $(arg fake_execution_type)
+    joints:
+      - panda1_joint1
+      - panda1_joint2
+      - panda1_joint3
+      - panda1_joint4
+      - panda1_joint5
+      - panda1_joint6
+      - panda1_joint7
+  - name: fake_panda1_hand_controller
+    type: $(arg fake_execution_type)
+    joints:
+      - panda1_finger_joint1
+  - name: fake_panda2_arm_controller
+    type: $(arg fake_execution_type)
+    joints:
+      - panda2_joint1
+      - panda2_joint2
+      - panda2_joint3
+      - panda2_joint4
+      - panda2_joint5
+      - panda2_joint6
+      - panda2_joint7
+  - name: fake_panda2_hand_controller
+    type: $(arg fake_execution_type)
+    joints:
+      - panda2_finger_joint1
+  - name: fake_panda3_arm_controller
+    type: $(arg fake_execution_type)
+    joints:
+      - panda3_joint1
+      - panda3_joint2
+      - panda3_joint3
+      - panda3_joint4
+      - panda3_joint5
+      - panda3_joint6
+      - panda3_joint7
+  - name: fake_panda3_hand_controller
+    type: $(arg fake_execution_type)
+    joints:
+      - panda3_finger_joint1
+  - name: fake_panda_multi_arm_controller
+    type: $(arg fake_execution_type)
+    joints:
+      - panda0_joint1
+      - panda0_joint2
+      - panda0_joint3
+      - panda0_joint4
+      - panda0_joint5
+      - panda0_joint6
+      - panda0_joint7
+      - panda1_joint1
+      - panda1_joint2
+      - panda1_joint3
+      - panda1_joint4
+      - panda1_joint5
+      - panda1_joint6
+      - panda1_joint7
+      - panda2_joint1
+      - panda2_joint2
+      - panda2_joint3
+      - panda2_joint4
+      - panda2_joint5
+      - panda2_joint6
+      - panda2_joint7
+      - panda3_joint1
+      - panda3_joint2
+      - panda3_joint3
+      - panda3_joint4
+      - panda3_joint5
+      - panda3_joint6
+      - panda3_joint7
+initial:  # Define initial robot poses per group
+  - group: panda0_arm
+    pose: ready
+  - group: panda0_hand
+    pose: close
+  - group: panda1_arm
+    pose: ready
+  - group: panda1_hand
+    pose: close
+  - group: panda2_arm
+    pose: ready
+  - group: panda2_hand
+    pose: close
+  - group: panda3_arm
+    pose: ready
+  - group: panda3_hand
+    pose: close
+  - group: panda_multi_arm
+    pose: ready

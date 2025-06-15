@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="panda">
+  <xacro:arg name="arm_id_0" default="panda0" />
+  <xacro:arg name="arm_id_1" default="panda1" />
+  <xacro:arg name="arm_id_2" default="panda2" />
+
+  <xacro:include filename="$(find moveit_resources_panda_description)/urdf/panda_arm.xacro"/>
+  <xacro:include filename="$(find moveit_resources_panda_description)/urdf/hand.xacro"/>
+
+  <!-- box shaped table as base for the 2 Pandas -->
+  <link name="base">
+    <visual>
+      <origin xyz="0.6 0 -0.05" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="1" length="0.1"/>
+      </geometry>
+      <material name="Pastel Gray">
+        <color rgba="0.7 0.7 0.7 0.2"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0.6 0 -0.05" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="1" length="0.1"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Define materials for colors -->
+  <material name="white">
+    <color rgba="1 1 1 1"/>
+  </material>
+
+
+  <!-- Organize the arms in two rows, perpendicular to each other and facing outwards. -->
+  <!-- panda_0 with gripper -->
+  <xacro:panda_arm arm_id="$(arg arm_id_0)" connected_to="base"  xyz="1.21 0 0" rpy="0 0 3.1415927"/>
+  <xacro:hand ns="$(arg arm_id_0)" rpy="0 0 0" connected_to="$(arg arm_id_0)_link8"/>
+
+  <!-- panda_1 with gripper -->
+  <xacro:panda_arm arm_id="$(arg arm_id_1)" connected_to="base"  xyz="0.22 0.571577 0" rpy="0 0 -1.04741975"/>
+  <xacro:hand ns="$(arg arm_id_1)" rpy="0 0 0" connected_to="$(arg arm_id_1)_link8"/>
+
+  <!-- panda_2 with gripper -->
+  <xacro:panda_arm arm_id="$(arg arm_id_2)" connected_to="base"  xyz="0.22 -0.571577 0" rpy="0 0 1.04741975"/>
+  <xacro:hand ns="$(arg arm_id_2)" rpy="0 0 0" connected_to="$(arg arm_id_2)_link8"/>
+
+</robot>

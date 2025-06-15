@@ -1,0 +1,522 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot 
+  name="Yaskawa_gp4" xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:macro name="Yaskawa_gp4" params="arm_id:='gp4' description_pkg:='robot_digital_twin' connected_to:='' xyz:='0 0 0' rpy:='0 0 0'">
+  <xacro:include 
+    filename="$(find robot_digital_twin)/urdf/common_materials.xacro"/>
+  
+  <xacro:if value="${connected_to == ''}">
+    <link name="world" />
+    <xacro:property name="base_frame_name" value="world"/>
+  </xacro:if>
+  <xacro:unless value="${connected_to == ''}">
+    <xacro:property name="base_frame_name" value="${connected_to}"/>
+  </xacro:unless>
+  
+  <joint name="${arm_id}_to_${base_frame_name}" type="fixed">
+      <parent link="${base_frame_name}"/>
+      <child link="${arm_id}_base"/>
+      <origin rpy="${rpy}" xyz="${xyz}"/>
+      <dynamics damping="1.0"/>
+  </joint>
+
+  <!-- ROS-Industrial 'base' frame: base_link to gp4 World Coordinates transform -->
+    <link name="${arm_id}_base" />
+    <joint name="${arm_id}_base_link-base" type="fixed">
+      <origin xyz="0 0 0.0" rpy="0 0 0"/>
+      <parent link="${arm_id}_base"/>
+      <child link="${arm_id}_base_link"/>
+    </joint>
+
+    <link name="${arm_id}_base_link">
+     <inertial>
+      <origin
+        xyz="-0.073983 0.00022734 0.13031"
+        rpy="0 0 0" />
+      <mass
+        value="42.212" />
+      <inertia
+        ixx="0.64296"
+        ixy="0.0012624"
+        ixz="-0.068804"
+        iyy="1.2709"
+        iyz="-0.0010754"
+        izz="1.3497" />
+    </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find robot_digital_twin)/meshes/gp4/base_link.stl"/>
+        </geometry>
+        <xacro:material_yaskawa_blue/>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find robot_digital_twin)/meshes/gp4/base_link.stl"/>
+        </geometry>
+      </collision>
+    </link>
+    <link name="${arm_id}_link_1">
+    <inertial>
+      <origin
+        xyz="0.058962 0.24363 -0.018725"
+        rpy="0 0 0" />
+      <mass
+        value="37.265" />
+      <inertia
+        ixx="0.95018"
+        ixy="-0.14402"
+        ixz="-0.064915"
+        iyy="1.0578"
+        iyz="0.037699"
+        izz="1.094" />
+    </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find robot_digital_twin)/meshes/gp4/link_1.stl"/>
+        </geometry>
+        <xacro:material_yaskawa_blue/>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find robot_digital_twin)/meshes/gp4/link_1_scaled.stl"/>
+        </geometry>
+      </collision>
+    </link>
+    <link name="${arm_id}_link_2">
+    <inertial>
+      <origin
+        xyz="3.5083E-05 0.39008 0.15036"
+        rpy="0 0 0" />
+      <mass
+        value="22.632" />
+      <inertia
+        ixx="1.7745"
+        ixy="-0.0054743"
+        ixz="0.00063015"
+        iyy="0.15511"
+        iyz="-0.09224"
+        izz="1.826" />
+    </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find robot_digital_twin)/meshes/gp4/link_2.stl"/>
+        </geometry>
+        <xacro:material_yaskawa_blue/>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find robot_digital_twin)/meshes/gp4/link_2_scaled.stl"/>
+        </geometry>
+      </collision>
+    </link>
+    <link name="${arm_id}_link_3">
+    <inertial>
+      <origin
+        xyz="0.086423 0.14427 -0.035793"
+        rpy="0 0 0" />
+      <mass
+        value="28.467" />
+      <inertia
+        ixx="0.65771"
+        ixy="-0.13627"
+        ixz="-0.026219"
+        iyy="0.52683"
+        iyz="0.051956"
+        izz="0.69722" />
+    </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find robot_digital_twin)/meshes/gp4/link_3.stl"/>
+        </geometry>
+        <xacro:material_yaskawa_blue/>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find robot_digital_twin)/meshes/gp4/link_3_scaled.stl"/>
+        </geometry>
+      </collision>
+    </link>
+    <link name="${arm_id}_link_4">
+    <inertial>
+      <origin
+        xyz="0.37337 0.00033491 0.012656"
+        rpy="0 0 0" />
+      <mass
+        value="7.629" />
+      <inertia
+        ixx="0.018151"
+        ixy="-0.00033527"
+        ixz="-0.031589"
+        iyy="0.48072"
+        iyz="3.3917E-05"
+        izz="0.47647" />
+    </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find robot_digital_twin)/meshes/gp4/link_4.stl"/>
+        </geometry>
+        <xacro:material_yaskawa_blue/>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find robot_digital_twin)/meshes/gp4/link_4_scaled.stl"/>
+        </geometry>
+      </collision>
+    </link>
+    <link name="${arm_id}_link_5">
+    <inertial>
+      <origin
+        xyz="0.062818 3.3289E-05 0.0048991"
+        rpy="0 0 0" />
+      <mass
+        value="2.5794" />
+      <inertia
+        ixx="0.015161"
+        ixy="-2.4835E-06"
+        ixz="0.0016647"
+        iyy="0.021382"
+        iyz="-2.248E-06"
+        izz="0.013473" />
+    </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find robot_digital_twin)/meshes/gp4/link_5.stl"/>
+        </geometry>
+        <xacro:material_yaskawa_blue/>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find robot_digital_twin)/meshes/gp4/link_5_scaled.stl"/>
+        </geometry>
+      </collision>
+    </link>
+    <link name="${arm_id}_link_6">
+    <inertial>
+      <origin
+        xyz="0.00015982 -0.00063018 -0.008266"
+        rpy="0 0 0" />
+      <mass
+        value="0.10811" />
+      <inertia
+        ixx="9.0129E-05"
+        ixy="-1.0891E-08"
+        ixz="9.1598E-09"
+        iyy="9.2026E-05"
+        iyz="-2.749E-07"
+        izz="0.00017818" />
+    </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find robot_digital_twin)/meshes/gp4/link_6.stl"/>
+        </geometry>
+        <xacro:material_yaskawa_silver/>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find robot_digital_twin)/meshes/gp4/link_6_scaled.stl"/>
+        </geometry>
+      </collision>
+    </link>
+    <link name="${arm_id}_fts">
+      <collision>
+        <origin xyz="0 0 0" rpy=" 0 0 0"/>
+        <geometry>
+          <cylinder length="0.0505" radius="0.058"/>
+        </geometry>
+      </collision>
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <cylinder length="0.0505" radius="0.0472"/>
+        </geometry>
+        <xacro:material_yaskawa_silver />
+      </visual>
+      <inertial>
+        <mass value="1e-5" />
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
+      </inertial>
+    </link>
+    <!-- <link name="${arm_id}_link_mountplate">
+    <inertial>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <mass
+        value="0.10811" />
+      <inertia
+        ixx="9.0129E-05"
+        ixy="-1.0891E-08"
+        ixz="9.1598E-09"
+        iyy="9.2026E-05"
+        iyz="-2.749E-07"
+        izz="0.00017818" />
+    </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find robot_digital_twin)/meshes/eoat/D405_mount.stl"/>
+        </geometry>
+        <xacro:material_yaskawa_silver />
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find robot_digital_twin)/meshes/eoat/D405_mount_inflated.stl"/>
+        </geometry>
+      </collision>
+    </link>
+    <link name="${arm_id}_link_precam">
+      <inertial>
+        <mass value="1e-5" />
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
+      </inertial>
+    </link>
+    <link name="${arm_id}_link_camera">
+    <inertial>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <mass
+        value="0.10811" />
+      <inertia
+        ixx="9.0129E-05"
+        ixy="-1.0891E-08"
+        ixz="9.1598E-09"
+        iyy="9.2026E-05"
+        iyz="-2.749E-07"
+        izz="0.00017818" />
+    </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find robot_digital_twin)/meshes/eoat/D405.stl"/>
+        </geometry>
+        <xacro:material_fanuc_black />
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find robot_digital_twin)/meshes/eoat/D405.stl"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="${arm_id}_link_camera_origin">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.0001 0.002 0.001"/>
+      </geometry>
+    </visual>
+      <inertial>
+        <mass value="1e-5" />
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
+      </inertial>
+    </link> -->
+    <link name="${arm_id}_link_tool">
+    <inertial>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <mass
+        value="0.10811" />
+      <inertia
+        ixx="9.0129E-05"
+        ixy="-1.0891E-08"
+        ixz="9.1598E-09"
+        iyy="9.2026E-05"
+        iyz="-2.749E-07"
+        izz="0.00017818" />
+    </inertial>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="file://$(find robot_digital_twin)/meshes/eoat/tool.stl"/>
+      </geometry>
+    </collision>
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find robot_digital_twin)/meshes/eoat/tool.stl"/>
+        </geometry>
+        <xacro:material_yaskawa_silver />
+      </visual>
+    </link>
+    
+
+
+    <!-- joints: main serial chain -->
+    <joint name="${arm_id}_joint_1" type="revolute">
+      <parent link="${arm_id}_base_link"/>
+      <child link="${arm_id}_link_1"/>
+      <origin xyz="0 0 0.330" rpy="0 0 0" />
+      <axis xyz="0 0 1" />
+      <!-- <limit lower="${radians(-170)}" upper="${radians(170)}" effort="220.5" velocity="${radians(465)}"/> -->
+      <limit effort="0" lower="${radians(-170)}" upper="${radians(170)}" velocity="${radians(465)}" />
+    </joint>
+    <joint name="${arm_id}_joint_2" type="revolute">
+      <parent link="${arm_id}_link_1"/>
+      <child link="${arm_id}_link_2"/>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <axis xyz="0 1 0" />
+      <limit effort="100" lower="${radians(-110)}" upper="${radians(130)}" velocity="${radians(465)}" />
+    </joint>
+    <joint name="${arm_id}_joint_3" type="revolute">
+      <parent link="${arm_id}_link_2"/>
+      <child link="${arm_id}_link_3"/>
+      <origin xyz="0 0 0.260" rpy="0 0 0" />
+      <axis xyz="0 -1 0" />
+      <limit effort="0" lower="${radians(-65)}" upper="${radians(200)}" velocity="${radians(525)}" />
+    </joint>
+    <joint name="${arm_id}_joint_4" type="revolute">
+      <parent link="${arm_id}_link_3"/>
+      <child link="${arm_id}_link_4"/>
+      <origin xyz="0.290 0 0.015" rpy="0 0 0" />
+      <axis xyz="-1 0 0" />
+      <limit effort="0" lower="${radians(-200)}" upper="${radians(200)}" velocity="${radians(550)}" />
+    </joint>
+    <joint name="${arm_id}_joint_5" type="revolute">
+      <parent link="${arm_id}_link_4"/>
+      <child link="${arm_id}_link_5"/>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <axis xyz="0 -1 0" />
+      <limit effort="0" lower="${radians(-123)}" upper="${radians(123)}" velocity="${radians(545)}" />
+    </joint>
+    <joint name="${arm_id}_joint_6" type="revolute">
+      <parent link="${arm_id}_link_5"/>
+      <child link="${arm_id}_link_6"/>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <axis xyz="-1 0 0" />
+      <limit effort="0" lower="${radians(-455)}" upper="${radians(455)}" velocity="${radians(1000)}" />
+    </joint>
+
+    <link name="${arm_id}_flange"/>
+    <joint name="${arm_id}_joint_6_t-flange" type="fixed">
+      <origin xyz="0.072 0 0" rpy="0 0 0"/>
+      <parent link="${arm_id}_link_6"/>
+      <child link="${arm_id}_flange"/>
+    </joint>
+
+    <joint name="${arm_id}_link_6_fts" type="fixed">
+      <origin xyz="${0.0505/2} 0 0" rpy="0 ${pi/2.0} 0" />
+      <parent link="${arm_id}_flange" />
+      <child link="${arm_id}_fts" />
+    </joint>
+
+    <!-- <joint name="${arm_id}_fts_plate" type="fixed">
+      <origin xyz="0 0 ${0.0505/2+0.00001}" rpy="${pi/2.0} 0 0" />
+      <parent link="${arm_id}_fts" />
+      <child link="${arm_id}_link_mountplate" />
+    </joint>
+    <joint name="${arm_id}_plate_precam" type="fixed">
+      <origin xyz="0 0 0" rpy="-${pi/2.0} 0  0" />
+      <parent link="${arm_id}_link_mountplate" />
+      <child link="${arm_id}_link_precam" />
+    </joint>
+    <joint name="${arm_id}_precam_camera" type="fixed">
+      <origin xyz="0 0.053512 ${0.00254+0.023+0.00001}" rpy="0  0  0" />
+      <parent link="${arm_id}_link_precam" />
+      <child link="${arm_id}_link_camera" />
+    </joint>
+    <joint name="${arm_id}_camera_imgplane" type="fixed">
+      <origin xyz="0.009 0 0" rpy="0 ${pi/2 + pi} -${pi/2}" />
+      <parent link="${arm_id}_link_camera" />
+      <child link="${arm_id}_link_camera_origin" />
+    </joint> -->
+    <joint name="${arm_id}_fts_tool" type="revolute">
+      <origin xyz="0 0 ${0.0505/2}" rpy="0 0 ${pi}" />
+      <parent link="${arm_id}_fts" />
+      <child link="${arm_id}_link_tool" />
+      <axis xyz="0 0 1" />
+      <limit velocity="0" effort="0" lower="0" upper="0" />
+    </joint>
+  </xacro:macro>
+
+  <xacro:macro name="gp4_gazebo" params="arm_id:='gp4'">
+    <xacro:macro name="transmission_block" params="joint_name">
+      <transmission name = "trans_${joint_name}">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name = "${joint_name}">
+          <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+        </joint>
+        <actuator name = "${joint_name}_motor">
+          <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+          <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+      </transmission>
+    </xacro:macro>
+    <!-- transmission block-->
+    <xacro:transmission_block joint_name = "${arm_id}_joint_1"/>
+    <xacro:transmission_block joint_name = "${arm_id}_joint_2"/>
+    <xacro:transmission_block joint_name = "${arm_id}_joint_3"/>
+    <xacro:transmission_block joint_name = "${arm_id}_joint_4"/>
+    <xacro:transmission_block joint_name = "${arm_id}_joint_5"/>
+    <xacro:transmission_block joint_name = "${arm_id}_joint_6"/>
+
+
+    <gazebo reference="fts_tool">
+        <provideFeedback>true</provideFeedback>
+    </gazebo>
+    <gazebo>
+      <provideFeedback>true</provideFeedback>
+        <plugin name="ft_sensor" filename="libgazebo_ros_ft_sensor.so">
+            <!-- <robotNamespace>/gp4_gazebo</robotNamespace> -->
+            <alwaysOn> true </alwaysOn>
+            <updateRate>125.0</updateRate>
+            <topicName>${arm_id}_ft_sensor</topicName>
+            <jointName>${arm_id}_fts_tool</jointName>
+            <noise>
+              <type>gaussian</type>
+              <mean>0.0</mean>
+              <stddev>0.001</stddev>
+            </noise>
+        </plugin>
+    </gazebo>
+
+
+
+    <gazebo reference="${arm_id}_base">
+      <material>Gazebo/Blue</material>
+      <visual> <transparency> 0 </transparency> </visual>
+    </gazebo> 
+    <gazebo reference="${arm_id}_base_link">
+      <material>Gazebo/Blue</material>
+      <visual> <transparency> 0 </transparency> </visual>
+    </gazebo> 
+    <gazebo reference="${arm_id}_link_1">
+      <material>Gazebo/Blue</material>
+      <visual> <transparency> 0 </transparency> </visual>
+    </gazebo>
+    <gazebo reference="${arm_id}_link_2">
+      <material>Gazebo/Blue</material>
+      <visual> <transparency> 0 </transparency> </visual>
+    </gazebo>
+    <gazebo reference="${arm_id}_link_3">
+      <material>Gazebo/Blue</material>
+      <visual> <transparency> 0 </transparency> </visual>
+    </gazebo>
+    <gazebo reference="${arm_id}_link_4">
+      <material>Gazebo/Blue</material>
+      <visual> <transparency> 0 </transparency> </visual>
+    </gazebo>
+    <gazebo reference="${arm_id}_link_5">
+      <material>Gazebo/Blue</material>
+      <visual> <transparency> 0 </transparency> </visual>
+    </gazebo>
+    <gazebo reference="${arm_id}_link_6">
+      <material>Gazebo/Black</material>
+      <visual> <transparency> 0 </transparency> </visual>
+    </gazebo>
+    <gazebo reference="${arm_id}_link_tool">
+      <material>Gazebo/Black</material>
+      <visual> <transparency> 0 </transparency> </visual>
+    </gazebo> 
+    <gazebo reference="${arm_id}_fts">
+      <material>Gazebo/Black</material>
+      <visual> <transparency> 0 </transparency> </visual>
+    </gazebo> 
+  </xacro:macro>
+</robot>

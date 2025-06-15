@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="bookshelf">
+
+  <!-- Define materials -->
+  <material name="black">
+    <color rgba="0 0 0 1"/>
+  </material>
+  <material name="brown">
+    <color rgba="0.65 0.16 0.16 1"/>
+  </material>
+
+  <!-- Back plate -->
+  <link name="back_plate">
+    <visual>
+      <geometry>
+        <box size="0.8 0.02 1"/> <!-- depth, width, height -->
+      </geometry>
+      <material name="black"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.8 0.02 1"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="back_plate_joint" type="fixed">
+    <parent link="base"/>
+    <child link="back_plate"/>
+    <origin xyz="0 -1 0.5" rpy="0 0 0"/>
+  </joint>
+
+  <!-- Side plates -->
+  <xacro:macro name="add_side_plate" params="name x">
+    <link name="${name}">
+      <visual>
+        <geometry>
+          <box size="0.02 0.36 1"/> <!-- depth, width, height -->
+        </geometry>
+        <material name="brown"/>
+      </visual>
+      <collision>
+        <geometry>
+          <box size="0.02 0.36 1"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="${name}_joint" type="fixed">
+      <parent link="back_plate"/>
+      <child link="${name}"/>
+      <origin xyz="${x} 0.18 0" rpy="0 0 0"/>
+    </joint>
+  </xacro:macro>
+  <xacro:add_side_plate name="left_side_plate" x="-0.4"/>
+  <xacro:add_side_plate name="right_side_plate" x="0.4"/>
+
+  <!-- Shelf macro -->
+  <xacro:macro name="add_shelf" params="name z">
+    <link name="${name}">
+      <visual>
+        <geometry>
+          <box size="0.8 0.36 0.01"/> <!-- width, depth, height -->
+        </geometry>
+        <material name="brown"/>
+      </visual>
+      <collision>
+        <geometry>
+          <box size="0.8 0.36 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="${name}_joint" type="fixed">
+      <parent link="back_plate"/>
+      <child link="${name}"/>
+      <origin xyz="0 0.18 ${z}" rpy="0 0 0"/>
+    </joint>
+  </xacro:macro>
+
+  <!-- Shelves -->
+  <xacro:add_shelf name="shelf0" z="-0.5"/>
+  <xacro:add_shelf name="shelf1" z="-0.25"/>
+  <xacro:add_shelf name="shelf2" z="0"/>
+  <xacro:add_shelf name="shelf3" z="0.25"/>
+  <xacro:add_shelf name="shelf4" z="0.5"/>
+
+</robot>

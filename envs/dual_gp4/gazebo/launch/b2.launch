@@ -1,0 +1,23 @@
+<launch>
+    <arg name="id" default="10"/> 
+    <arg name="color" default="Red"/>
+
+    <arg name = "name" default="b2_$(arg id)"/>
+    <param name="b2_$(arg id)_description" command="$(find xacro)/xacro --inorder $(find robot_digital_twin)/urdf/lego_2x4.xacro 
+                                                    brick_color:=$(arg color)"/>
+    <node name="spawn_b2_$(arg id)" pkg="gazebo_ros" type="spawn_model"
+      args="-param b2_$(arg id)_description
+            -urdf 
+            -x 0
+            -y 0
+            -z 0.0112
+            -model $(arg name)"
+      respawn="false" output="screen">
+    </node>    
+    
+    <include file="$(find robot_digital_twin)/launch/b2.launch" if="$(eval arg('id') - 1 > 0)">
+        <arg name="color" value="$(arg color)"/>
+        <arg name="id" value="$(eval arg('id') - 1)"/>
+   </include>
+
+</launch>

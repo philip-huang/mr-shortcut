@@ -1,0 +1,11 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: robot_digital_twin
+    relative_path: urdf/dual_gp4.urdf.xacro
+    xacro_args: ""
+  SRDF:
+    relative_path: config/dual_gp4.srdf
+  CONFIG:
+    author_name: Philip Huang
+    author_email: philiphuang@cmu.edu
+    generated_timestamp: 1734002504

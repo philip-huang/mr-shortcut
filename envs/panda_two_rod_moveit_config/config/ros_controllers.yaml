@@ -1,0 +1,88 @@
+position_controller:
+  type: position_controllers/JointTrajectoryController
+  joints:
+    - panda0_joint1
+    - panda0_joint2
+    - panda0_joint3
+    - panda0_joint4
+    - panda0_joint5
+    - panda0_joint6
+    - panda0_joint7
+    - panda1_joint1
+    - panda1_joint2
+    - panda1_joint3
+    - panda1_joint4
+    - panda1_joint5
+    - panda1_joint6
+    - panda1_joint7
+  gains:
+    panda0_joint1:
+      p: 100
+      d: 1
+      i: 1
+      i_clamp: 1
+    panda0_joint2:
+      p: 100
+      d: 1
+      i: 1
+      i_clamp: 1
+    panda0_joint3:
+      p: 100
+      d: 1
+      i: 1
+      i_clamp: 1
+    panda0_joint4:
+      p: 100
+      d: 1
+      i: 1
+      i_clamp: 1
+    panda0_joint5:
+      p: 100
+      d: 1
+      i: 1
+      i_clamp: 1
+    panda0_joint6:
+      p: 100
+      d: 1
+      i: 1
+      i_clamp: 1
+    panda0_joint7:
+      p: 100
+      d: 1
+      i: 1
+      i_clamp: 1
+    panda1_joint1:
+      p: 100
+      d: 1
+      i: 1
+      i_clamp: 1
+    panda1_joint2:
+      p: 100
+      d: 1
+      i: 1
+      i_clamp: 1
+    panda1_joint3:
+      p: 100
+      d: 1
+      i: 1
+      i_clamp: 1
+    panda1_joint4:
+      p: 100
+      d: 1
+      i: 1
+      i_clamp: 1
+    panda1_joint5:
+      p: 100
+      d: 1
+      i: 1
+      i_clamp: 1
+    panda1_joint6:
+      p: 100
+      d: 1
+      i: 1
+      i_clamp: 1
+    panda1_joint7:
+      p: 100
+      d: 1
+      i: 1
+      i_clamp: 1

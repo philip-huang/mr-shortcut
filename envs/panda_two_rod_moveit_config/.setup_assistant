@@ -1,0 +1,11 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: panda_two_moveit_config
+    relative_path: ../panda_two_description/urdf/panda_two_objects.urdf.xacro
+    xacro_args: ""
+  SRDF:
+    relative_path: config/panda.srdf
+  CONFIG:
+    author_name: Philip Huang
+    author_email: philiphuang@cmu.edu
+    generated_timestamp: 1712781167

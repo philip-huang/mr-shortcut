@@ -1,0 +1,26 @@
+controller_list:
+  - name: multi_arm_position_controller
+    action_ns: follow_joint_trajectory
+    type: FollowJointTrajectory
+    default: True
+    joints:
+      - panda0_joint1
+      - panda0_joint2
+      - panda0_joint3
+      - panda0_joint4
+      - panda0_joint5
+      - panda0_joint6
+      - panda0_joint7
+      - panda1_joint2
+      - panda1_joint3
+      - panda1_joint4
+      - panda1_joint5
+      - panda1_joint6
+      - panda1_joint7
+      - panda2_joint1
+      - panda2_joint2
+      - panda2_joint3
+      - panda2_joint4
+      - panda2_joint5
+      - panda2_joint6
+      - panda2_joint7

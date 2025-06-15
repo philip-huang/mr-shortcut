@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="panda">
+  <xacro:arg name="arm_id_0" default="panda0" />
+  <xacro:arg name="arm_id_1" default="panda1" />
+  <xacro:arg name="arm_id_2" default="panda2" />
+  <xacro:arg name="arm_id_3" default="panda3" />
+
+  <xacro:include filename="$(find moveit_resources_panda_description)/urdf/panda_arm.xacro"/>
+  <xacro:include filename="$(find moveit_resources_panda_description)/urdf/hand.xacro"/>
+  <xacro:include filename="box.xacro"/>
+
+  <!-- box shaped table as base for the 4 Pandas -->
+  <link name="base">
+    <visual>
+      <origin xyz="0 0 0.05" rpy="0 0 0"/>
+      <geometry>
+        <box size="2 2 0.1" />
+      </geometry>
+      <material name="Pastel Gray">
+        <color rgba="0.7 0.7 0.7 0.2"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.05" rpy="0 0 0"/>
+      <geometry>
+        <box size="2 2 0.1" />
+      </geometry>
+    </collision>
+  </link>
+
+  <xacro:add_box parent_link="base" box_name="box1" box_length="0.5" box_width="0.5" 
+      box_height="0.5" box_x="0" box_y="0" box_z="0" box_color="0 0 1 1"/>
+  <xacro:add_box parent_link="base" box_name="box2" box_length="0.5" box_width="0.5"
+      box_height="0.5" box_x="0.5" box_y="0" box_z="0" box_color="0 1 0 1"/>
+  <xacro:add_box parent_link="base" box_name="box3" box_length="0.5" box_width="0.5"
+     box_height="0.5" box_x="-0.5" box_y="0" box_z="0" box_color="1 0 0 1"/>
+  <xacro:add_box parent_link="base" box_name="box4" box_length="0.5" box_width="0.5"
+     box_height="0.5" box_x="0" box_y="0.5" box_z="0" box_color="1 1 0 1"/>
+  <xacro:add_box parent_link="base" box_name="box5" box_length="0.5" box_width="0.5"
+     box_height="0.5" box_x="0" box_y="-0.5" box_z="0" box_color="0.5 0 0.5 1"/>
+
+  <!-- Define the rod as a xacro macro -->
+  <xacro:macro name="add_rod" params="parent_link rod_name rod_length=0.5 rod_radius=0.01 rod_color='0.5 0.5 0.5 1'">
+    <material name="${rod_name}_material">
+      <color rgba="${rod_color}"/>
+    </material>
+
+    <link name="${rod_name}">
+      <visual>
+        <geometry>
+          <cylinder length="${rod_length}" radius="${rod_radius}"/>
+        </geometry>
+        <material name="${rod_name}_material"/>
+      </visual>
+      <collision>
+        <geometry>
+          <cylinder length="${rod_length}" radius="${rod_radius}"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <!-- Attach the rod to the specified parent link -->
+    <joint name="${rod_name}_joint" type="fixed">
+      <parent link="${parent_link}"/>
+      <child link="${rod_name}"/>
+      <origin xyz="0 0 0.1" rpy="0 1.5708 0"/> <!-- Adjust as needed -->
+    </joint>
+  </xacro:macro>
+
+
+  <!-- panda_0 with gripper -->
+  <xacro:panda_arm arm_id="$(arg arm_id_0)" connected_to="base"  xyz="0.4 -0.4 0.1" rpy="0 0 2.28"/>
+  <xacro:hand ns="$(arg arm_id_0)" rpy="0 0 0" connected_to="$(arg arm_id_0)_link8"/>
+  <xacro:add_rod parent_link="$(arg arm_id_0)_hand" rod_name="rod_0" rod_length="0.3" rod_radius="0.01" rod_color="0 1 0 1"/>
+
+  <!-- panda1 with gripper -->
+  <xacro:panda_arm arm_id="$(arg arm_id_1)" connected_to="base"  xyz="-0.4 -0.4 0.1" rpy="0 0 0.66"/>
+  <xacro:hand ns="$(arg arm_id_1)" rpy="0 0 0" connected_to="$(arg arm_id_1)_link8"/>
+  <xacro:add_rod parent_link="$(arg arm_id_1)_hand" rod_name="rod_1" rod_length="0.3" rod_radius="0.01" rod_color="1 0 0 1"/>
+
+  <!-- panda2 with gripper -->
+  <xacro:panda_arm arm_id="$(arg arm_id_2)" connected_to="base"  xyz="-0.4 0.4 0.1" rpy="0 0 -0.66"/>
+  <xacro:hand ns="$(arg arm_id_2)" rpy="0 0 0" connected_to="$(arg arm_id_2)_link8"/>
+  <xacro:add_rod parent_link="$(arg arm_id_2)_hand" rod_name="rod_2" rod_length="0.3" rod_radius="0.01" rod_color="0 0 1 1"/>
+
+  <!-- panda3 with gripper -->
+  <xacro:panda_arm arm_id="$(arg arm_id_3)" connected_to="base"  xyz="0.4 0.4 0.1" rpy="0 0 -2.28"/>
+  <xacro:hand ns="$(arg arm_id_3)" rpy="0 0 0" connected_to="$(arg arm_id_3)_link8"/>
+  <xacro:add_rod parent_link="$(arg arm_id_3)_hand" rod_name="rod_3" rod_length="0.3" rod_radius="0.01" rod_color="1 1 0 1"/>
+</robot>

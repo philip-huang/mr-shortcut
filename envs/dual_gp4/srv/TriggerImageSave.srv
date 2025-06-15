@@ -1,0 +1,8 @@
+# Request (can be empty if no specific parameters are needed for saving)
+string base_save_path    # Optional: Specify a directory or base filename
+---
+# Response
+bool success             # Indicate if saving was successful
+string message           # Optional: Provide feedback or error message
+string image_path_cam1   # Return the full path where the first image was saved
+string image_path_cam2   # Return the full path where the second image was saved

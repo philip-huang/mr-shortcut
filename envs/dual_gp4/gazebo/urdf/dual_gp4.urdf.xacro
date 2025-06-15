@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<robot name="dual_gp4" xmlns:xacro="http://ros.org/wiki/xacro">
+
+    <!-- add arms names prefixes -->
+    <xacro:arg name="arm_id_1" default="left_arm" />
+    <xacro:arg name="arm_id_2" default="right_arm" />
+
+    <!-- load arm/hand models and utils (which adds the robot inertia tags to be Gazebo-simulation ready) -->
+    <xacro:include filename="$(find robot_digital_twin)/urdf/single_gp4.xacro" />
+
+    <link name="world"/>
+
+    <!-- box shaped table as base for the 2 GP4 -->
+    <link name="base">
+    </link>
+
+    <joint name="base_to_world" type="fixed">
+        <parent link="world"/>
+        <child link="base"/>
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+    </joint>
+    
+    <!-- left arm -->
+    <xacro:Yaskawa_gp4 arm_id="$(arg arm_id_1)" connected_to="base" xyz="0 0 0.9246" rpy="0 0 0" />
+    <!-- left arm gazebo -->
+    <!-- right arm -->
+    <xacro:Yaskawa_gp4 arm_id="$(arg arm_id_2)" connected_to="base" xyz="0.88101137 -0.01304334 0.92460000" rpy="0 0 3.13585279" />
+    <!-- right arm gazebo-->
+    <xacro:gp4_gazebo arm_id="$(arg arm_id_2)" />
+
+    <!-- load ros_control plugin -->
+    <gazebo>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+	    <!-- <robotNamespace>/gp4_gazebo</robotNamespace> -->
+      <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+      <legacyModeNS>true</legacyModeNS>
+    </plugin>
+  </gazebo>
+
+</robot>

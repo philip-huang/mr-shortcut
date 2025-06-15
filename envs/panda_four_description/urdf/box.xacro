@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="box">
+
+  <!-- Define a macro to create a box -->
+  <xacro:macro name="add_box" params="parent_link box_name box_length box_width box_height box_x box_y box_z box_color">
+    <!-- Material for the box -->
+    <material name="${box_name}_box_material">
+      <color rgba="${box_color}"/> <!-- Tan color -->
+    </material>
+
+    <!-- Bottom plate -->
+    <link name="${box_name}_bottom_plate">
+      <visual>
+        <geometry>
+          <box size="${box_length} ${box_width} 0.02"/>
+        </geometry>
+        <material name="${box_name}_box_material"/>
+      </visual>
+      <collision>
+        <geometry>
+          <box size="${box_length} ${box_width} 0.02"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="${box_name}_bottom_plate_joint" type="fixed">
+      <parent link="${parent_link}"/>
+      <child link="${box_name}_bottom_plate"/>
+      <origin xyz="${box_x} ${box_y} ${box_z}" rpy="0 0 0"/>
+    </joint>
+
+   <!-- Side plates: front, back, left, right -->
+    <!-- Adjust the z value by adding 0.01 to account for the bottom plate's thickness -->
+    <xacro:add_plate parent="${box_name}_bottom_plate" name="front" size="${box_length} 0.02 ${box_height}" x="0" y="${box_width/2}" z="${box_height/2 + 0.01}"/>
+    <xacro:add_plate parent="${box_name}_bottom_plate" name="back" size="${box_length} 0.02 ${box_height}" x="0" y="-${box_width/2}" z="${box_height/2 + 0.01}"/>
+    <xacro:add_plate parent="${box_name}_bottom_plate" name="left" size="0.02 ${box_width} ${box_height}" x="-${box_length/2}" y="0" z="${box_height/2 + 0.01}"/>
+    <xacro:add_plate parent="${box_name}_bottom_plate" name="right" size="0.02 ${box_width} ${box_height}" x="${box_length/2}" y="0" z="${box_height/2 + 0.01}"/>
+   </xacro:macro>
+
+  <!-- Macro to add a plate to the box -->
+  <xacro:macro name="add_plate" params="parent name size x y z">
+    <link name="${parent}_${name}">
+      <visual>
+        <geometry>
+          <box size="${size}"/>
+        </geometry>
+        <material name="${box_name}_box_material"/>
+      </visual>
+      <collision>
+        <geometry>
+          <box size="${size}"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="${parent}_${name}_joint" type="fixed">
+      <parent link="${parent}"/>
+      <child link="${parent}_${name}"/>
+      <origin xyz="${x} ${y} ${z}" rpy="0 0 0"/>
+    </joint>
+  </xacro:macro>
+
+  
+</robot>

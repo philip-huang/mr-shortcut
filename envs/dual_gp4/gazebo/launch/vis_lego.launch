@@ -1,0 +1,108 @@
+<launch>
+    <arg name="num_b2" default="5"/> 
+    <arg name="num_b3" default="5"/> 
+    <arg name="num_b4" default="5"/> 
+    <arg name="num_b5" default="5"/> 
+    <arg name="num_b6" default="5"/> 
+    <arg name="num_b9" default="5"/> 
+    <arg name="num_b10" default="5"/> 
+    <arg name="num_b12" default="5"/> 
+    <arg name="color_b2" default="Red"/> 
+    <arg name="color_b3" default="Red"/> 
+    <arg name="color_b4" default="Red"/> 
+    <arg name="color_b5" default="Red"/> 
+    <arg name="color_b6" default="Red"/> 
+    <arg name="color_b9" default="Red"/> 
+    <arg name="color_b10" default="Red"/> 
+    <arg name="color_b12" default="Red"/> 
+
+    <arg name="launch_world" default="true"/>
+    <arg name="paused" default="false"/>
+    <arg name="use_sim_time" default="true"/>
+    <arg name="gui" default="true"/>
+    <arg name="headless" default="false"/>
+    <arg name="debug" default="false"/>
+
+    <group if="$(eval launch_world)">
+    <include
+      file="$(find gazebo_ros)/launch/empty_world.launch">
+      <arg name="debug" value="$(arg debug)" />
+      <arg name="gui" value="$(arg gui)" />
+      <arg name="paused" value="$(arg paused)"/>
+      <arg name="use_sim_time" value="$(arg use_sim_time)"/>
+      <arg name="headless" value="$(arg headless)"/>
+    </include>
+  </group>
+
+    <arg name = "assemble_plate" default="assemble_plate"/>
+    <arg name = "assemble_plate_color" default="Grey" />
+    <param name="assemble_plate_description" command="$(find xacro)/xacro --inorder 
+                                                      $(find robot_digital_twin)/urdf/lego_baseplate48.xacro
+                                                      plate_color:=$(arg assemble_plate_color)"/>
+    <node name="spawn_assemble_plate" pkg="gazebo_ros" type="spawn_model"
+      args="-param assemble_plate_description
+            -urdf 
+            -x 0
+            -y 0
+            -z 0
+            -model $(arg assemble_plate)"
+      respawn="false" output="screen">
+    </node>
+
+    <arg name = "storage_plate" default="storage_plate"/>
+    <arg name = "storage_plate_color" default="White" />
+    <param name="storage_plate_description" command="$(find xacro)/xacro --inorder 
+                                                      $(find robot_digital_twin)/urdf/lego_baseplate48.xacro
+                                                      plate_color:=$(arg storage_plate_color)"/>
+    <node name="spawn_storage_plate" pkg="gazebo_ros" type="spawn_model"
+      args="-param storage_plate_description
+            -urdf 
+            -x 0
+            -y 0
+            -z 0
+            -model $(arg storage_plate)"
+      respawn="false" output="screen">
+    </node>
+
+    <include file="$(find robot_digital_twin)/launch/b2.launch">
+        <arg name="id" value="$(arg num_b2)"/>
+        <arg name="color" value="$(arg color_b2)"/>
+    </include>
+
+    <include file="$(find robot_digital_twin)/launch/b3.launch">
+        <arg name="id" value="$(arg num_b3)"/>
+        <arg name="color" value="$(arg color_b3)"/>
+    </include>
+
+    <include file="$(find robot_digital_twin)/launch/b4.launch">
+        <arg name="id" value="$(arg num_b4)"/>
+        <arg name="color" value="$(arg color_b4)"/>
+    </include>
+
+    <include file="$(find robot_digital_twin)/launch/b5.launch">
+        <arg name="id" value="$(arg num_b5)"/>
+        <arg name="color" value="$(arg color_b5)"/>
+    </include>
+
+    <include file="$(find robot_digital_twin)/launch/b6.launch">
+        <arg name="id" value="$(arg num_b6)"/>
+        <arg name="color" value="$(arg color_b6)"/>
+    </include>
+
+    <include file="$(find robot_digital_twin)/launch/b9.launch">
+        <arg name="id" value="$(arg num_b9)"/>
+        <arg name="color" value="$(arg color_b9)"/>
+    </include>
+
+    <include file="$(find robot_digital_twin)/launch/b10.launch">
+        <arg name="id" value="$(arg num_b10)"/>
+        <arg name="color" value="$(arg color_b10)"/>
+    </include>
+
+    <include file="$(find robot_digital_twin)/launch/b12.launch">
+        <arg name="id" value="$(arg num_b12)"/>
+        <arg name="color" value="$(arg color_b12)"/>
+    </include>
+
+
+</launch>
