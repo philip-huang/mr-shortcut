@@ -191,7 +191,7 @@ if __name__ == "__main__":
     id = 1
 
     # Parallelize evaluation over 5 loop types
-    for i in range(1, 2):
+    for i in range(0, 6):
         processes, id = add_shortcut_processes(envs[i:i+1], shortcut_ts[i:i+1], ['tpg', 'cbs'], ['comp'], id=id)
         process_manager.add_processes(processes)
         process_manager.wait_for_processes()
