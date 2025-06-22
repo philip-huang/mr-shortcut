@@ -24,7 +24,24 @@ Once you have download ros, and other system deps, under your catkin_ws/src, dow
 - [gp4 digital twin](https://github.com/intelligent-control-lab/Robot_Digital_Twin.git). checkout to the ``dual_arm_gp4`` branch!
 - this repo
 
-then do ```catkin build mr``` to compile
+then use the script ```mr-shortcut/mr-shortcut/scripts/build.sh ``` to compile, and 
+
+## Download the dataset
+The dataset of RRT-generated and CBS-generated trajectories are avaiable [here](https://drive.google.com/file/d/124UENhk04nAFtKsALYTuaoMwy9W30rac/view?usp=sharing). 
+
+To automatically download and extract the dataset, run:
+```bash
+# Install gdown if not already installed
+pip install gdown
+# Download the dataset from Google Drive
+cd mr-shortcut/mr-shortcut
+gdown 124UENhk04nAFtKsALYTuaoMwy9W30rac
+# Extract the dataset to the outputs directory
+unzip -q trajectories.zip -d ./
+```
+
+Alternatively, you can manually download and extract them under ```mr-shortcut/mr-shortcut/outputs```
+
 
 
 ## Benchmark planner on different environments
@@ -53,3 +70,7 @@ roslaunch mr-shortcut panda_two.launch benchmark:=true
 - `scripts`:
     - `benchmark.py`: Python scripts for benchmarking motion planning/TPG processing in parallel
     - `plot.py`: Visualize the results 
+
+- ```outputs```: Trajectoreis and outputs
+    - ```cbs```: CBS-generated trajectories stored in csv file
+    - ```tpg``` : RRT-generated trajectories stored in custom TPG-formated files

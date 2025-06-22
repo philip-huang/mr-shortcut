@@ -27,6 +27,7 @@ RUN apt-get update && apt-get install -y \
     ros-noetic-rviz-visual-tools \
     ros-noetic-moveit-visual-tools \
     ros-noetic-ros-control \
+    ros-noetic-moveit-resources \
     && rm -rf /var/lib/apt/lists/*
 
 # Install pandas, numpy in pip
@@ -40,8 +41,8 @@ WORKDIR $HOME
 RUN mkdir -p catkin_ws/src && \
     /bin/bash -c '. /opt/ros/noetic/setup.bash; cd catkin_ws; catkin init'
 
-RUN cd catkin_ws/src \
-    && git clone https://github.com/philip-huang/mr-shortcut.git
+#RUN cd catkin_ws/src \
+#    && git clone https://github.com/philip-huang/mr-shortcut.git
 
 
 # build the workspace

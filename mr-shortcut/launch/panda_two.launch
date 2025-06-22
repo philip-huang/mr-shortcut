@@ -28,6 +28,7 @@
     <arg name="subset_prob" default="0.4" />
     <arg name="gdb" default="false" />
     <arg name="loglevel" default="info" />
+    <arg name="build_tpg" default="false" />
 
     <!-- Workaround on wsl for opengl rendering issue -->
     <env name="LIBGL_ALWAYS_SOFTWARE" value="1"/>

@@ -108,6 +108,7 @@ def eval_setting(ns, robot_name, load_tpg, load_cbs, t, tight, biased, partial, 
         'forward_singleloop': 'true' if loop_type == 'iter' else 'false',
         'biased_sample': 'true' if biased else 'false',
         'subset_shortcut': 'true' if partial else 'false',
+        'build_tpg': 'false' if load_tpg else 'true',
         # Add more parameters as needed
     }
 
@@ -182,27 +183,16 @@ if __name__ == "__main__":
     process_manager = ProcessManager()
 
     envs = ["dual_gp4", "panda_two", "panda_two_rod", "panda_four", "panda_three", "panda_four_bins"]
-    t_plans = [0.5, 0.5, 2.0, 15.0, 15.0, 15.0]
+    #t_plans = [0.5, 0.5, 2.0, 15.0, 15.0, 15.0]
     shortcut_ts = [5.0, 5.0, 10.0, 60.0, 60.0, 60.0]
-    loop_types = ['path', 'pp', 'rr', 'auto', 'thompson']
+    loop_types = ['path', 'pp', 'rr', 'comp', 'thompson']
+    # loop_types = ['fwd_diter', 'bwd_diter', 'iter', 'random']
 
-    for env, t in zip(envs, t_plans):
-        processes, id = add_planner_processes([env], [t])
+    id = 1
+
+    # Parallelize evaluation over 5 loop types
+    for i in range(1, 2):
+        processes, id = add_shortcut_processes(envs[i:i+1], shortcut_ts[i:i+1], ['tpg', 'cbs'], ['comp'], id=id)
         process_manager.add_processes(processes)
         process_manager.wait_for_processes()
-
-    #id = 1
-    #processes, id = add_shortcut_processes(envs[1:2], shortcut_ts[1:2], ['tpg'], ['iter', 'bwd_diter'], id=id)
-    #process_manager.add_processes(processes)
-    #process_manager.wait_for_processes()
-
-    # for i in range(2, 3):
-    #     processes, id = add_shortcut_processes(envs[i:i+1], shortcut_ts[i:i+1], ['cbs'], loop_types, id=id)
-    #     process_manager.add_processes(processes)
-    #     process_manager.wait_for_processes()
-    # loop_types = ['fwd_diter', 'bwd_diter', 'iter', 'random', 'comp']
-    # for i in range(2, 3):
-    #     processes, id = add_shortcut_processes(envs[i:i+1], shortcut_ts[i:i+1], ['cbs'], loop_types, id=id)
-    #     process_manager.add_processes(processes)
-    #     process_manager.wait_for_processes()   
         
