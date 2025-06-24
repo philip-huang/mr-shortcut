@@ -27,6 +27,11 @@ To automatically download and extract the dataset, run ```cd mr-shortcut/mr-shor
 
 Alternatively, you can manually download and extract them under ```mr-shortcut/mr-shortcut/outputs```
 
+## Run example
+To validate the installation, you can run the following example with two GP4 robot arms with 1 second of shortcutting.
+```
+roslaunch mr-shortcut dual_gp4.launch shortcut_time:=1.0
+```
 
 
 ## Benchmark planner on different environments
