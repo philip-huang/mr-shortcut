@@ -1,5 +1,8 @@
 # Multi-Robot Shortcut Benchmark
 
+[![Docker Build and Test](https://github.com/philip-huang/mr-shortcut/workflows/Docker%20Build%20and%20Test/badge.svg)](https://github.com/philip-huang/mr-shortcut/actions)
+[![GitHub Pages](https://github.com/philip-huang/mr-shortcut/workflows/Deploy%20Jekyll%20with%20GitHub%20Pages%20dependencies%20preinstalled/badge.svg)](https://github.com/philip-huang/mr-shortcut/actions)
+
 This is the code repository for our paper "Benchmarking Shortcutting Techniques for Multi-Robot Arm Motion Planning".
 
 _Note that this repo is still currently being updated with bug fixes and cleaned-up_

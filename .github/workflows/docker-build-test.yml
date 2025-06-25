@@ -1,0 +1,26 @@
+name: Docker Build and Test
+
+on: [push, pull_request]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      name: Check out the repo content
+
+    - name: Build Docker image
+      run: |
+        cd docker
+        docker build . -t mr-shortcut-image
+
+    - name: Check if shortcutting node assign works
+      run: |
+        timeout --signal=SIGINT 1m docker run --name mr_shortcut-container mr-shortcut-image -c "source /opt/ros/noetic/setup.bash && source /root/catkin_ws/devel/setup.bash && roslaunch mr-shortcut dual_gp4.launch use_rviz:=false > output.txt 2>&1"
+        docker cp mr_shortcut-container:/root/catkin_ws/output.txt output.txt
+        docker rm mr_shortcut-container
+        if ! grep -q "Planning completed successfully" output.txt; then
+          echo "Planning did not complete successfully"
+          exit 1
+        fi
