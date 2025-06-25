@@ -2,6 +2,7 @@
 
 This is the code repository for our paper "Benchmarking Shortcutting Techniques for Multi-Robot Arm Motion Planning".
 
+_Note that this repo is still currently being updated with bug fixes and cleaned-up_
 ## Installation
 Build the docker image and run it inside docker
 ```

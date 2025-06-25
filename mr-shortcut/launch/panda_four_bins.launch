@@ -5,7 +5,7 @@
     <arg name="use_rviz" default="true" />
     <arg name="benchmark" default="false" />
     <arg name="random_shortcut" default="true" />
-    <arg name="shortcut_time" default="0.0" />
+    <arg name="shortcut_time" default="1.0" />
     <arg name="tight_shortcut" default="true" />
     <arg name="output_file" default="$(find mr-shortcut)/outputs/panda_four_bins_benchmark.csv" />
     <arg name="planner_name" default="RRTConnect" />
@@ -16,10 +16,10 @@
     <arg name="prioritized_shortcut" default="false" />
     <arg name="path_shortcut" default="false" />
     <arg name="auto_selector" default="false" />
-    <arg name="tpg_shortcut" default="true" />
+    <arg name="tpg_shortcut" default="false" />
     <arg name="round_robin" default="false" />
-    <arg name="thompson_selector" default="false" />
-    <arg name="tpg_savedir" default="$(find mr-shortcut)/outputs/tpgs/t=15.0_RRTConnect_panda_four_bins" />
+    <arg name="thompson_selector" default="true" />
+    <arg name="tpg_savedir" default="$(find mr-shortcut)/outputs/tpgs/t=2.0_RRTConnect_panda_four_bins" />
     <arg name="forward_doubleloop" default="false" />
     <arg name="backward_doubleloop" default="false" />
     <arg name="forward_singleloop" default="false" />

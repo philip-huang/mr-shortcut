@@ -5,7 +5,7 @@
     <arg name="use_rviz" default="true" />
     <arg name="benchmark" default="false" />
     <arg name="random_shortcut" default="true" />
-    <arg name="shortcut_time" default="0.0" />
+    <arg name="shortcut_time" default="1.0" />
     <arg name="tight_shortcut" default="true" />
     <arg name="output_file" default="$(find mr-shortcut)/outputs/panda_four_benchmark.csv" />
     <arg name="planner_name" default="RRTConnect" />
@@ -15,11 +15,11 @@
     <arg name="composite_shortcut" default="false" />
     <arg name="prioritized_shortcut" default="false" />
     <arg name="path_shortcut" default="false" />
-    <arg name="tpg_shortcut" default="true" />
+    <arg name="tpg_shortcut" default="false" />
     <arg name="auto_selector" default="false" />
     <arg name="round_robin" default="false" />
-    <arg name="thompson_selector" default="false" />
-    <arg name="tpg_savedir" default="$(find mr-shortcut)/outputs/tpgs/t=15.0_RRTConnect_panda_four" />
+    <arg name="thompson_selector" default="true" />
+    <arg name="tpg_savedir" default="$(find mr-shortcut)/outputs/tpgs/t=2.0_RRTConnect_panda_four" />
     <arg name="forward_doubleloop" default="false" />
     <arg name="backward_doubleloop" default="false" />
     <arg name="forward_singleloop" default="false" />
@@ -93,6 +93,11 @@
             <param name="pose_name3" value="back" />
             <param name="pose_name4" value="up_and_down" />
             <param name="pose_name5" value="front_and_back" />
+            <param name="pose_name6" value="left_and_right" />
+            <param name="pose_name7" value="center" />
+            <param name="pose_name8" value="tiled_mess" />
+            <param name="pose_name9" value="tiled_clean" />
+            <param name="pose_name10" value="up" />
         </node>
     </group>
 
