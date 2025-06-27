@@ -38,33 +38,47 @@ roslaunch mr-shortcut dual_gp4.launch shortcut_time:=1.0
 ```
 
 
-## Benchmark planner on different environments
+## Benchmark shortcutting  on different environments
 
-I have included several launch files for running planner in different environments, which are panda_two, panda_three, panda_four, panda_two_rod, and panda_four_bin. To benchmark the performance of the planner / shortcutting algorithm, you can run
+I have included several launch files for running planner in different environments, which are panda_two, panda_three, panda_four, panda_two_rod, and panda_four_bin. 
+
+A script to run all evaluations in parallel and reproduce the results in our paper. We used a AMD Threadripper 3990X CPU and evaluate 10 processes in parallel. Run
 ```
-roslaunch mr-shortcut panda_two.launch benchmark:=true
+cd mr-shortcut/scripts
+python benchmark.py
 ```
+
+We also provide a script to generate the plots in our paper. Run
+```
+cd mr-shortcut/scripts
+python plot.py plot_comp
+```
+To generate a comparison of makespan improvement (Fig. 4) in our paper.
 
 
 ## Code Structure
 
-- `include`: API of the library
-    - `instance.h`: Class for the planning scene
-    - `logger.h`: Utilities for logging
-    - `planner.h`: Implements a multi-robot planning interface
-    - `SingleAgentPlanner.h`: Implements the single agent planning algorithm
-    - `tpg.h`: Implements the Temporal Plan Graph execution policy and post-processing algorithm
+- `docker`: dockerfile and setup script
+- `env`: robot environments (URDF, moveit configuration packages)
+- `mr-shortcut`: implementation of shortcutting algorithms and utilities
+    - `include`: API of the library
+        - `instance.h`: Class for the planning scene
+        - `logger.h`: Utilities for logging
+        - `planner.h`: Implements a multi-robot planning interface
+        - `SingleAgentPlanner.h`: Implements the single agent planning algorithm
+        - `tpg.h`: Implements the Temporal Plan Graph execution policy and post-processing algorithm
+        - `shortcutter.h`: Implements various shortcutting algorithms
 
-- `src`: Code for the library and executable
-    - `demo_node.cpp`: Executable for testing single-step planning
+    - `src`: Code for the library and executable
+        - `demo_node.cpp`: Executable for testing single-step planning
 
-- `launch`: 
-    - `dual_gp4.launch`, `panda_two.launch`, `panda_two_rod.launch`, `panda_three.launch`, `panda_four.launch`, `panda_four_bins.launch`: Launch files for testing the single agent planning
+    - `launch`: 
+        - `dual_gp4.launch`, `panda_two.launch`, `panda_two_rod.launch`, `panda_three.launch`, `panda_four.launch`, `panda_four_bins.launch`: Launch files for testing the single agent planning
 
-- `scripts`:
-    - `benchmark.py`: Python scripts for benchmarking motion planning/TPG processing in parallel
-    - `plot.py`: Visualize the results 
+    - `scripts`:
+        - `benchmark.py`: Python scripts for benchmarking motion planning/TPG processing in parallel
+        - `plot.py`: Visualize the results 
 
-- ```outputs```: Trajectoreis and outputs
-    - ```cbs```: CBS-generated trajectories stored in csv file
-    - ```tpg``` : RRT-generated trajectories stored in custom TPG-formated files
+    - ```outputs```: Trajectoreis and outputs
+        - ```cbs```: CBS-generated trajectories stored in csv file
+        - ```tpg``` : RRT-generated trajectories stored in custom TPG-formated files

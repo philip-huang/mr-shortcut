@@ -60,136 +60,7 @@ def compute_statistics(group):
     
     return pd.Series(stats)
 
-# Plot the data
-def plot(env, folder="outputs_pikachu", planner=""):
-    dt_dict = {'dual_gp4': 0.025,
-               'panda_two': 0.05,
-               'panda_two_rod': 0.05,
-               'panda_four': 1.0,
-               'panda_four_bins': 1.0,
-               'panda_three': 1.0}
-    dt = dt_dict[env]
-    entries = [
-                ('g', 'x', f'{planner}comp_loose', 'Composite'),
-                ('purple', 'D', f'{planner}random_loose', 'TPG'),
-                ('orange', 'P', f'{planner}pp_loose', 'Prioritized'), 
-                #('b', 'o', f'{planner}pp_random_loose', 'TPG with Allow Collision'),
-                ('cyan', '.', f'{planner}path_loose', 'Path'),
-                ('r', 's', f'{planner}auto_loose', 'Weighted Discrete'),
-                ('m', '^', f'{planner}rr_loose', 'RR'),
-                ('pink', 'D', f'{planner}thompson_loose', 'Thompson'),
-                ('black', 'v', f'{planner}fwd_diter_loose', 'Forward Double'),
-                ('brown', '>', f'{planner}bwd_diter_loose', 'Backward Double'),
-                ('yellow', 'o', f'{planner}iter_loose', 'Iterative'),
-            ]
-    metric = 'makespan'
-
-    plt.figure(figsize=(16, 9))
-    plt.title(f'{env}')
-    plt.rcParams.update({'font.size': 15})
-
-    base_dir = os.path.dirname(os.path.realpath(__file__))
-
-    for color, marker, algo, label in entries:
-
-        # get cur file dir
-        dir = os.path.join(base_dir, f'../{folder}/{algo}')
-        df = read_csv(dir, env)
-
-        # Group by start_pose and goal_pose, then apply the function
-        grouped_stats = df.groupby('timestep').apply(compute_statistics).reset_index()
-        t_val_actual = grouped_stats['timestep'] * dt
-        
-        # print the number of unique (start_pose, goal_pose) pairs
-        print(algo, len(df.groupby(['start_pose', 'goal_pose']).size()))
-        
-        # Plot the data with the specified color and label
-        plt.subplot(3, 2, 1)
-        
-        vals = grouped_stats['makespan_improv_mean'][:-1]
-        stds = grouped_stats['makespan_improv_std'][:-1]
-        plt.plot(t_val_actual[:-1], vals, label=label, marker=marker, color=color)
-        plt.fill_between(t_val_actual[:-1], np.array(vals) - np.array(stds), np.array(vals) + np.array(stds), alpha=0.2, color=color)
-        
-        plt.subplot(3, 2, 2)
-        # split array of tuple into two arrays
-        n_check = grouped_stats['n_check_mean'][1:-1]
-        stds = grouped_stats['n_check_std'][1:-1]
-        plt.plot(t_val_actual[1:-1], n_check, label=label, marker=marker, color=color)
-        plt.fill_between(t_val_actual[1:-1], np.array(n_check) - np.array(stds), np.array(n_check) + np.array(stds), alpha=0.2, color=color)
-
-        plt.subplot(3, 2, 3)
-        n_valid = grouped_stats['n_valid_mean'][1:-1]
-        stds = grouped_stats['n_valid_std'][1:-1]
-        plt.plot(t_val_actual[1:-1], n_valid, label=label, marker=marker, color=color)
-        plt.fill_between(t_val_actual[1:-1], np.array(n_valid) - np.array(stds), np.array(n_valid) + np.array(stds), alpha=0.2, color=color)
-
-        plt.subplot(3, 2, 4)
-        vals = grouped_stats['n_colcheck_post_mean'][1:-1]
-        stds = grouped_stats['n_colcheck_post_std'][1:-1]
-        plt.plot(t_val_actual[1:-1], vals, label=label, marker=marker, color=color)
-        plt.fill_between(t_val_actual[1:-1], np.array(vals) - np.array(stds), np.array(vals) + np.array(stds), alpha=0.2, color=color)
-
-        plt.subplot(3, 2, 5)
-        vals = grouped_stats['norm_isj_mean'][1:-1]
-        stds = grouped_stats['norm_isj_std'][1:-1]
-        plt.plot(t_val_actual[1:-1], vals, label=label, marker=marker, color=color)
-        plt.fill_between(t_val_actual[1:-1], np.array(vals) - np.array(stds), np.array(vals) + np.array(stds), alpha=0.2, color=color)
-
-        plt.subplot(3, 2, 6)
-        vals = grouped_stats['dir_consistency_mean'][1:-1]
-        stds = grouped_stats['dir_consistency_std'][1:-1]
-        plt.plot(t_val_actual[1:-1], vals, label=label, marker=marker, color=color)
-        plt.fill_between(t_val_actual[1:-1], np.array(vals) - np.array(stds), np.array(vals) + np.array(stds), alpha=0.2, color=color)
-
-    plt.subplot(3, 2, 1) 
-
-    # log axis for x
-    # lower bound the y axis to 0
-    #plt.ylim(bottom=0)
-    plt.ylabel('Improvement (%)')
-    plt.xscale('log')
-
-    plt.legend(fontsize='8')
-
-    plt.subplot(3, 2, 2)
-    plt.xscale('log')
-    plt.yscale('log')
-    plt.ylabel('# Shortcut Checked')
-
-    plt.subplot(3, 2, 3)
-    plt.ylabel('# Shortcut Valid')
-    plt.xscale('log')
-    plt.yscale('log')
-
-    plt.subplot(3, 2, 4)
-    plt.xscale('log')
-    plt.yscale('log')
-    plt.ylabel('# Collision Check')
-
-    plt.subplot(3, 2, 5)
-    plt.xscale('log')
-    plt.ylabel('Norm ISJ')
-
-    plt.subplot(3, 2, 6)
-    plt.xscale('log')
-    plt.ylabel('Dir Consistency')
-
-    plt.subplot(3, 2, 7)
-    plt.xlabel('Time (s)')
-    plt.xscale('log')
-    plt.ylabel('% comp')
-
-    plt.subplot(3, 2, 8)
-    plt.xlabel('Time (s)')
-    plt.xscale('log')
-    plt.ylabel('% path')
-
-    plt.tight_layout()
-    plt.savefig(os.path.join(base_dir, f'../outputs/plots/{env}.png'))
-    plt.show()
-
-def plot_comparison(metric='makespan', planner='cbs_', folder='outputs_pikachu', plot_median=False):
+def plot_comparison(metric='makespan', planner='cbs_', folder='outputs', plot_median=False):
     """
     Generic plotting function for different metrics across environments
     
@@ -314,6 +185,8 @@ def plot_comparison(metric='makespan', planner='cbs_', folder='outputs_pikachu',
         line.set_linewidth(3.0) 
 
     legend_ax.axis('off')
+    # Make the directory for plots if it doesn't exist
+    os.makedirs(os.path.join(base_dir, '../outputs/plots'), exist_ok=True)
     legend_fig.savefig(os.path.join(base_dir, f'../outputs/plots/legend_{metric}.pdf'), 
                       bbox_inches='tight', dpi=300)
     plt.close(legend_fig)
@@ -328,9 +201,9 @@ def plot_comparison(metric='makespan', planner='cbs_', folder='outputs_pikachu',
             try:
                 df = read_csv(dir, env)
                 grouped_stats = df.groupby('timestep').apply(compute_statistics).reset_index()
-                t_val_actual = grouped_stats['timestep'] * dt_dict[env]
+                t_val_actual = (grouped_stats['timestep'] * dt_dict[env]).values
                 
-                values = grouped_stats[config['data_key']][:-1]
+                values = grouped_stats[config['data_key']].values[:-1]
                 
                 # Increase line width and marker size for highlighted algorithms
                 is_highlighted = color in ['#FF4444', '#4444FF', '#009B77']
@@ -358,7 +231,7 @@ def plot_comparison(metric='makespan', planner='cbs_', folder='outputs_pikachu',
 
     plt.tight_layout()
     
-    plt.savefig(os.path.join(base_dir, f'../outputs/plots/{metric}_{planner}_comparison.pdf'), 
+    plt.savefig(os.path.join(base_dir, f'../outputs/plots/{metric}_{planner}_comparison.png'), 
                 bbox_inches='tight', dpi=500)
     plt.show()
 
@@ -426,7 +299,7 @@ def calculate_makespan_difference(folder='outputs'):
         return {}
 
 
-def generate_latex_tables(folder='outputs_pikachu'):
+def generate_latex_tables(folder='outputs'):
     """Generate LaTeX tables for different metrics across all methods and environments, alternating TPG and CBS rows"""
     environments = ['GP4 Two', 'Panda Two', 'Panda Two Rod', 'Panda Four', 'Panda Four Bins', 'Panda Three']
     env_file_names = {
@@ -651,7 +524,7 @@ def generate_latex_tables(folder='outputs_pikachu'):
 
         print(f"LaTeX tables have been written to {output_file}")
 
-def generate_aggregate_statistics(folder='outputs_pikachu'):
+def generate_aggregate_statistics(folder='outputs'):
     """
     Generate LaTeX table with statistics aggregated across all environments.
     Using makecell for multiline headers, without collision check metrics.
@@ -823,7 +696,7 @@ def generate_aggregate_statistics(folder='outputs_pikachu'):
 
 from matplotlib.ticker import FuncFormatter
 
-def plot_method_selection(planner='cbs_thompson', folder='outputs_pikachu', plot_valid=False, acculumate=True, prefix=""):
+def plot_method_selection(planner='cbs_thompson', folder='outputs', plot_valid=False, acculumate=True, prefix=""):
     """Plot the distribution of method selection for Auto method over time"""
     environments = ['dual_gp4', 'panda_two', 'panda_two_rod', 'panda_four', 'panda_four_bins', 'panda_three']
     dt_dict = {
@@ -969,7 +842,7 @@ def plot_method_selection(planner='cbs_thompson', folder='outputs_pikachu', plot
                 bbox_inches='tight', dpi=500)
     plt.show()
 
-def plot_method_scatter_comparison(baseline_method='path_loose', compare_method='auto_loose', metric='makespan', folder="outputs_pikachu"):
+def plot_method_scatter_comparison(baseline_method='path_loose', compare_method='auto_loose', metric='makespan', folder="outputs"):
     """
     Create scatter plots comparing performance between two methods.
     Each point represents one problem instance.
@@ -1086,7 +959,7 @@ def plot_method_scatter_comparison(baseline_method='path_loose', compare_method=
                 bbox_inches='tight', dpi=300)
     plt.show()
 
-def plot_multi_method_scatter(folder="outputs_pikachu", metric="makespan_improv", transpose=False):
+def plot_multi_method_scatter(folder="outputs", metric="makespan_improv", transpose=False):
     """
     Create a grid of scatter plots comparing multiple methods.
     Args:
@@ -1244,7 +1117,7 @@ def plot_multi_method_scatter(folder="outputs_pikachu", metric="makespan_improv"
                 bbox_inches='tight')
     plt.show()
 
-def compute_initial_statistics(folder='outputs_pikachu'):
+def compute_initial_statistics(folder='outputs'):
     """
     Compute initial statistics (path length, makespan, directional consistency)
     for both CBS and RRT planners across all environments using the existing read_csv function.
@@ -1346,7 +1219,6 @@ if __name__ == '__main__':
     fire.Fire({
         'table': generate_latex_tables,
         'agg_table': generate_aggregate_statistics,
-        'plot': plot,
         'plot_comp': plot_comparison,
         'selection': plot_method_selection,
         'scatter': plot_method_scatter_comparison,

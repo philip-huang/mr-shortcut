@@ -183,16 +183,31 @@ if __name__ == "__main__":
     process_manager = ProcessManager()
 
     envs = ["dual_gp4", "panda_two", "panda_two_rod", "panda_four", "panda_three", "panda_four_bins"]
-    #t_plans = [0.5, 0.5, 2.0, 15.0, 15.0, 15.0]
     shortcut_ts = [5.0, 5.0, 10.0, 60.0, 60.0, 60.0]
+    # path -> path shortcutting
+    # pp -> prioritized shortcutting
+    # rr -> (multi-strategy) round robin shortcutting
+    # thompson -> (multi-strategy) thompson shortcutting
+    # comp -> composite shortcutting
+    # fwd_diter -> forward double loop shortcutting
+    # bwd_diter -> backward double loop shortcutting
+    # iter -> single loop shortcutting
+    # random -> tpg shortcutting
+    
     loop_types = ['path', 'pp', 'rr', 'comp', 'thompson']
-    # loop_types = ['fwd_diter', 'bwd_diter', 'iter', 'random']
+    loop_types_b = ['fwd_diter', 'bwd_diter', 'iter', 'random']
 
     id = 1
 
-    # Parallelize evaluation over 5 loop types
+    # Parallelize evaluation over 5 loop types and 2 planner types
+    # CBS is for CBS generated trajectories, TPG is for RRT generated trajectories
     for i in range(0, 6):
-        processes, id = add_shortcut_processes(envs[i:i+1], shortcut_ts[i:i+1], ['tpg', 'cbs'], ['comp'], id=id)
+        # run the first set of shortcutting methods
+        processes, id = add_shortcut_processes(envs[i:i+1], shortcut_ts[i:i+1], ['cbs', 'tpg'], loop_types, id=id)
         process_manager.add_processes(processes)
         process_manager.wait_for_processes()
         
+        # run the second set of shortcutting methods
+        processes, id = add_planner_processes(envs[i:i+1], shortcut_ts[i:i+1], ['cbs', 'tpg'], loop_types_b, id=id)
+        process_manager.add_processes(processes)
+        process_manager.wait_for_processes()
