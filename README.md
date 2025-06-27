@@ -91,7 +91,7 @@ If you find this repository useful for your research, kindly cite the following 
         author    = {Philip Huang and Yorai Shaoul and Jiaoyang Li},
         title     = {Benchmarking Shortcutting Techniques for Multi-Robot Arm Motion Planning},
         year      = {2025},
-        howpublished = {\url{https://your-github-username.github.io/mr-shortcut/}},
+        howpublished = {\url{https://philip-huang.github.io/mr-shortcut/}},
         note      = {Website}
       }
 ```
