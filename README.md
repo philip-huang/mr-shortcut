@@ -48,12 +48,12 @@ cd mr-shortcut/scripts
 python benchmark.py
 ```
 
-We also provide a script to generate the plots in our paper. Run
+We also provide a script, ```mr-shortcut/scripts/plot.py``` to generate the plots in our paper. Check the script for more details on the plot options. For example, run
 ```
 cd mr-shortcut/scripts
 python plot.py plot_comp
 ```
-To generate a comparison of makespan improvement (Fig. 4) in our paper.
+To generate a comparison of makespan improvement for cbs-generated trajectories (Fig. 4) in our paper.
 
 
 ## Code Structure
@@ -82,3 +82,16 @@ To generate a comparison of makespan improvement (Fig. 4) in our paper.
     - ```outputs```: Trajectoreis and outputs
         - ```cbs```: CBS-generated trajectories stored in csv file
         - ```tpg``` : RRT-generated trajectories stored in custom TPG-formated files
+
+## Citation
+If you find this repository useful for your research, kindly cite the following work
+
+```
+@inproceedings{huang2025shortcut,
+              title = {Benchmarking Shortcutting Techniques for Multi-Robot Arm Motion Planning},
+              author = {Huang, Philip and Shaoul, Yorai and Li, Jiaoyang},
+              year = {2025},
+              info = {https://philip-huang.github.io/mr-shortcut/},
+              booktitle = {IEEE/RSJ International Conference on Intelligent Robots and Systems},
+            }
+```

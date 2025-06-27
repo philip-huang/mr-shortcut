@@ -61,13 +61,13 @@ def run_script(script_path, params):
 
 def eval_setting(ns, robot_name, load_tpg, load_cbs, t, tight, biased, partial, subset_prob, planner_name, planning_time_limit,
                  loop_type):
-    assert loop_type in ['fwd_diter', 'bwd_diter', 'iter', 'comp', 'pp', 'random', 'comp_random', 'pp_random', 'path', 'auto', 'rr', 'thompson']
+    assert loop_type in ['fwd_diter', 'bwd_diter', 'iter', 'comp', 'pp', 'tpg', 'path', 'rr', 'thompson']
 
     base_directory = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../outputs/')
     tpg_directory = None
     if load_tpg:
         directory = base_directory + \
-            f'{loop_type}_{("tight" if tight else "loose")}' + \
+            f'rrt_{loop_type}_{("tight" if tight else "loose")}' + \
             f'{"_biased" if biased else ""}{f"_partial{subset_prob}" if partial else ""}'
         tpg_directory = base_directory + f'tpgs/t={planning_time_limit}_{planner_name}_{robot_name}'
     elif load_cbs:
@@ -86,7 +86,7 @@ def eval_setting(ns, robot_name, load_tpg, load_cbs, t, tight, biased, partial, 
     params = {
         'benchmark': 'true',
         'use_rviz': 'false',
-        'random_shortcut': 'true' if (loop_type in ['random', 'comp_random', 'pp_random']) else 'false',
+        'random_shortcut': 'true' if (loop_type in ['tpg']) else 'false',
         'shortcut_time': str(t),
         'tight_shortcut': 'true' if tight else 'false',
         'planner_name': planner_name,
@@ -95,11 +95,10 @@ def eval_setting(ns, robot_name, load_tpg, load_cbs, t, tight, biased, partial, 
         'output_file': f'{directory}/{robot_name}_benchmark.csv', 
         'load_tpg': 'true' if load_tpg else 'false',
         'load_cbs': 'true' if load_cbs else 'false',
-        'tpg_shortcut': 'true' if (loop_type in ['random', 'comp_random', 'pp_random']) else 'false',
+        'tpg_shortcut': 'true' if (loop_type in ['tpg']) else 'false',
         'prioritized_shortcut': 'true' if (loop_type in ['pp', 'pp_random']) else 'false',
         'composite_shortcut': 'true' if (loop_type in ['comp', 'comp_random']) else 'false',
         'path_shortcut': 'true' if loop_type in ['path', 'fwd_diter', 'bwd_diter', 'iter'] else 'false',
-        'auto_selector': 'true' if loop_type == 'auto' else 'false',
         'round_robin': 'true' if loop_type == 'rr' else 'false',
         'thompson_selector': 'true' if loop_type == 'thompson' else 'false',
         'tpg_savedir': tpg_directory,
@@ -161,7 +160,7 @@ def add_shortcut_processes(envs, shortcut_ts, load_types, loop_types, id = 0):
     subset_prob = 0.6
     for env, shortcut_t in zip(envs, shortcut_ts):
         for load_type in load_types:
-            load_tpg = True if load_type == 'tpg' else False
+            load_tpg = True if load_type == 'rrt' else False
             load_cbs = True if load_type == 'cbs' else False
             for tight in [False]:
                 for biased in [False]:
@@ -192,10 +191,10 @@ if __name__ == "__main__":
     # fwd_diter -> forward double loop shortcutting
     # bwd_diter -> backward double loop shortcutting
     # iter -> single loop shortcutting
-    # random -> tpg shortcutting
+    # tpg -> tpg shortcutting
     
     loop_types = ['path', 'pp', 'rr', 'comp', 'thompson']
-    loop_types_b = ['fwd_diter', 'bwd_diter', 'iter', 'random']
+    loop_types_b = ['fwd_diter', 'bwd_diter', 'iter', 'tpg']
 
     id = 1
 
@@ -203,11 +202,11 @@ if __name__ == "__main__":
     # CBS is for CBS generated trajectories, TPG is for RRT generated trajectories
     for i in range(0, 6):
         # run the first set of shortcutting methods
-        processes, id = add_shortcut_processes(envs[i:i+1], shortcut_ts[i:i+1], ['cbs', 'tpg'], loop_types, id=id)
+        processes, id = add_shortcut_processes(envs[i:i+1], shortcut_ts[i:i+1], ['cbs', 'rrt'], loop_types, id=id)
         process_manager.add_processes(processes)
         process_manager.wait_for_processes()
         
         # run the second set of shortcutting methods
-        processes, id = add_planner_processes(envs[i:i+1], shortcut_ts[i:i+1], ['cbs', 'tpg'], loop_types_b, id=id)
+        processes, id = add_planner_processes(envs[i:i+1], shortcut_ts[i:i+1], ['cbs', 'rrt'], loop_types_b, id=id)
         process_manager.add_processes(processes)
         process_manager.wait_for_processes()

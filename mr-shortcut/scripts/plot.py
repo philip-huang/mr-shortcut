@@ -60,7 +60,7 @@ def compute_statistics(group):
     
     return pd.Series(stats)
 
-def plot_comparison(metric='makespan', planner='cbs_', folder='outputs', plot_median=False):
+def plot_comparison(metric='makespan', planner='cbs', folder='outputs', plot_median=False):
     """
     Generic plotting function for different metrics across environments
     
@@ -89,15 +89,14 @@ def plot_comparison(metric='makespan', planner='cbs_', folder='outputs', plot_me
     # Define methods to compare with distinct colors and markers
     # Main algorithms highlighted with bold colors, others dimmed but colorful
     entries = [
-        ('#A4B0BE', 'X', f'{planner}comp_loose', 'Composite'),  # Dimmed blue-gray
-        ('#D1A4B0', 'P', f'{planner}pp_loose', 'Prioritized'),  # Dimmed pink
-        ('#95AFC0', 'o', f'{planner}path_loose', 'Path'),  # Dimmed blue
-        ('#BDC581', 'd', f'{planner}random_loose', 'TPG'),  # Dimmed olive
-        ('#A5B1C2', 'v', f'{planner}fwd_diter_loose', 'Fwd Loop'),  # Dimmed slate
-        ('#B0C4DE', '>', f'{planner}bwd_diter_loose', 'Bwd Loop'),  # Dimmed silver
-        ('#4444FF', '^', f'{planner}rr_loose', 'RR'),  # Bold blue
-        #('#FF4444', 's', f'{planner}auto_loose', 'Weighted'),  # Bold red
-        ('#009B77', 'D', f'{planner}thompson_loose', 'Thompson'),  # Bold emerald green
+        ('#A4B0BE', 'X', f'{planner}_comp_loose', 'Composite'),  # Dimmed blue-gray
+        ('#D1A4B0', 'P', f'{planner}_pp_loose', 'Prioritized'),  # Dimmed pink
+        ('#95AFC0', 'o', f'{planner}_path_loose', 'Path'),  # Dimmed blue
+        ('#BDC581', 'd', f'{planner}_tpg_loose', 'TPG'),  # Dimmed olive
+        ('#A5B1C2', 'v', f'{planner}_fwd_diter_loose', 'Fwd Loop'),  # Dimmed slate
+        ('#B0C4DE', '>', f'{planner}_bwd_diter_loose', 'Bwd Loop'),  # Dimmed silver
+        ('#4444FF', '^', f'{planner}_rr_loose', 'RR'),  # Bold blue
+        ('#009B77', 'D', f'{planner}_thompson_loose', 'Thompson'),  # Bold emerald green
     ]
 
     # Configure metric-specific settings
@@ -315,10 +314,9 @@ def generate_latex_tables(folder='outputs'):
         ('comp_loose', 'Composite'),
         ('pp_loose', 'Prioritized'),
         ('path_loose', 'Path'),
-        ('random_loose', 'TPG'),
+        ('tpg_loose', 'TPG'),
         ('fwd_diter_loose', 'Fwd Loop'),
         ('bwd_diter_loose', 'Bwd Loop'),
-        #('auto_loose', 'Adaptive'),
         ('rr_loose', 'RR'),
         ('thompson_loose', 'DTS'),
     ]
@@ -377,8 +375,8 @@ def generate_latex_tables(folder='outputs'):
     # Initialize data structure
     data = {metric: {} for metric in metrics}
     for metric in metrics:
-        data[metric] = {'tpg': {}, 'cbs': {}}
-        for method_type in ['tpg', 'cbs']:
+        data[metric] = {'rrt': {}, 'cbs': {}}
+        for method_type in ['rrt', 'cbs']:
             for method_id, _ in base_methods:
                 data[metric][method_type][method_id] = {'mean': {}, 'std': {}}
     
@@ -389,7 +387,7 @@ def generate_latex_tables(folder='outputs'):
     for env_display, env_file in env_file_names.items():
         print(f"Processing environment: {env_display}")
         for method_id, method_name in base_methods:
-            # Process TPG version
+            # Process RRT version
             try:
                 dir_path = os.path.join(base_dir, f'../{folder}/{method_id}')
                 df = read_csv(dir_path, env_file)
@@ -399,13 +397,13 @@ def generate_latex_tables(folder='outputs'):
                     mean_value = grouped_stats[metric_config['mean_key']].iloc[-2]
                     std_value = grouped_stats[metric_config['std_key']].iloc[-2]
                     
-                    data[metric_name]['tpg'][method_id]['mean'][env_display] = mean_value
-                    data[metric_name]['tpg'][method_id]['std'][env_display] = std_value
+                    data[metric_name]['rrt'][method_id]['mean'][env_display] = mean_value
+                    data[metric_name]['rrt'][method_id]['std'][env_display] = std_value
             except Exception as e:
-                print(f"Error processing TPG {method_id} for {env_display}: {e}")
+                print(f"Error processing RRT {method_id} for {env_display}: {e}")
                 for metric_name in metrics:
-                    data[metric_name]['tpg'][method_id]['mean'][env_display] = float('nan')
-                    data[metric_name]['tpg'][method_id]['std'][env_display] = float('nan')
+                    data[metric_name]['rrt'][method_id]['mean'][env_display] = float('nan')
+                    data[metric_name]['rrt'][method_id]['std'][env_display] = float('nan')
 
             # Process CBS version
             try:
@@ -434,13 +432,13 @@ def generate_latex_tables(folder='outputs'):
             best_values = {
                 'cbs': {env: float('-inf') if metric_config.get('best') == 'max' else float('inf') 
                         for env in environments},
-                'tpg': {env: float('-inf') if metric_config.get('best') == 'max' else float('inf') 
+                'rrt': {env: float('-inf') if metric_config.get('best') == 'max' else float('inf') 
                         for env in environments}
             }
             
             # Find the best values for each planner type separately
             if 'best' in metric_config:
-                for planner in ['cbs', 'tpg']:
+                for planner in ['cbs', 'rrt']:
                     for env in environments:
                         for method_id, _ in base_methods:
                             value = data[metric_name][planner][method_id]['mean'][env]
@@ -493,8 +491,8 @@ def generate_latex_tables(folder='outputs'):
             for i, (method_id, method_name) in enumerate(base_methods):
                 row_values = []
                 for env in environments:
-                    mean = data[metric_name]['tpg'][method_id]['mean'][env]
-                    std = data[metric_name]['tpg'][method_id]['std'][env]
+                    mean = data[metric_name]['rrt'][method_id]['mean'][env]
+                    std = data[metric_name]['rrt'][method_id]['std'][env]
                     if np.isnan(mean):
                         formatted_value = "-"
                     else:
@@ -506,7 +504,7 @@ def generate_latex_tables(folder='outputs'):
                             format_str = f"{{:.{metric_config['decimal_places']}f}}"
                             mean_str = format_str.format(mean)
                             std_str = format_str.format(std)
-                            if 'best' in metric_config and abs(mean - best_values['tpg'][env]) < 1e-6:
+                            if 'best' in metric_config and abs(mean - best_values['rrt'][env]) < 1e-6:
                                 mean_str = f"\\textbf{{{mean_str}}}"
                             formatted_value = f"{mean_str} $\\pm$ {std_str}"
                     row_values.append(formatted_value)
@@ -537,7 +535,7 @@ def generate_aggregate_statistics(folder='outputs'):
         ('comp_loose', 'Composite'),
         ('pp_loose', 'Prioritized'),
         ('path_loose', 'Path'),
-        ('random_loose', 'TPG'),
+        ('tpg_loose', 'TPG'),
         ('fwd_diter_loose', 'Fwd Loop'),
         ('bwd_diter_loose', 'Bwd Loop'),
         ('rr_loose', 'RR'),
@@ -553,7 +551,7 @@ def generate_aggregate_statistics(folder='outputs'):
 
     # Initialize data structure to store aggregated results
     aggregated_data = {}
-    for planner in ['cbs', 'tpg']:
+    for planner in ['cbs', 'rrt']:
         aggregated_data[planner] = {}
         for method_id, _ in base_methods:
             aggregated_data[planner][method_id] = {
@@ -571,8 +569,8 @@ def generate_aggregate_statistics(folder='outputs'):
         print(f"Processing environment: {env}")
         for method_id, _ in base_methods:
             # Process both planner types
-            for planner_type in ['cbs', 'tpg']:
-                prefix = 'cbs_' if planner_type == 'cbs' else ''
+            for planner_type in ['cbs', 'rrt']:
+                prefix = 'cbs_' if planner_type == 'cbs' else 'rrt_'
                 try:
                     dir_path = os.path.join(base_dir, f'../{folder}/{prefix}{method_id}')
                     df = read_csv(dir_path, env)
@@ -619,7 +617,7 @@ def generate_aggregate_statistics(folder='outputs'):
         
         
         # Write data for each planner type and method
-        for planner_display, planner_type in [("CBS", "cbs"), ("RRT", "tpg")]:
+        for planner_display, planner_type in [("CBS", "cbs"), ("RRT", "rrt")]:
             # Find best values for each metric within this planner type
             metrics = ['makespan_improv', 'pathlen_improv', 'dir_consistency_improv', 
                       'n_check', 'n_valid', 'makespan_diff_per_step']
@@ -697,7 +695,7 @@ def generate_aggregate_statistics(folder='outputs'):
 from matplotlib.ticker import FuncFormatter
 
 def plot_method_selection(planner='cbs_thompson', folder='outputs', plot_valid=False, acculumate=True, prefix=""):
-    """Plot the distribution of method selection for Auto method over time"""
+    """Plot the distribution of method selection for Thompson method over time"""
     environments = ['dual_gp4', 'panda_two', 'panda_two_rod', 'panda_four', 'panda_four_bins', 'panda_three']
     dt_dict = {
         'dual_gp4': 0.025,
@@ -842,7 +840,7 @@ def plot_method_selection(planner='cbs_thompson', folder='outputs', plot_valid=F
                 bbox_inches='tight', dpi=500)
     plt.show()
 
-def plot_method_scatter_comparison(baseline_method='path_loose', compare_method='auto_loose', metric='makespan', folder="outputs"):
+def plot_method_scatter_comparison(baseline_method='path_loose', compare_method='thompson_loose', metric='makespan', folder="outputs"):
     """
     Create scatter plots comparing performance between two methods.
     Each point represents one problem instance.
@@ -853,7 +851,7 @@ def plot_method_scatter_comparison(baseline_method='path_loose', compare_method=
         metric: Which metric to compare ('makespan' for makespan improvement)
     """
     environments = ['dual_gp4', 'panda_two', 'panda_two_rod', 'panda_four', 'panda_four_bins', 'panda_three']
-    planners = ['cbs_', '']
+    planners = ['cbs_', 'rrt_']
     
     # Create figure with square aspect ratio
     plt.figure(figsize=(8, 8))
@@ -870,9 +868,8 @@ def plot_method_scatter_comparison(baseline_method='path_loose', compare_method=
 
     legend_map = {
         'path_loose': 'Path',
-        'auto_loose': 'Weighted Discrete',
         'comp_loose': 'Composite',
-        'random_loose': 'TPG',
+        'tpg_loose': 'TPG',
         'pp_loose': 'Prioritized',
         'rr_loose': 'Round Robin',
         'thompson_loose': 'Thompson',
@@ -975,9 +972,8 @@ def plot_multi_method_scatter(folder="outputs", metric="makespan_improv", transp
     # Method display names for labels
     legend_map = {
         'path_loose': 'Path',
-        'auto_loose': 'Adaptive',
         'comp_loose': 'Composite',
-        'random_loose': 'TPG',
+        'tpg_loose': 'TPG',
         'pp_loose': 'Prioritized',
         'rr_loose': 'Round Robin',
         'thompson_loose': 'DTS',
@@ -987,7 +983,7 @@ def plot_multi_method_scatter(folder="outputs", metric="makespan_improv", transp
     }
     
     environments = ['dual_gp4', 'panda_two', 'panda_two_rod', 'panda_four', 'panda_four_bins', 'panda_three']
-    planners = ['cbs_', '']
+    planners = ['cbs_', 'rrt_']
     
     # Determine plot dimensions based on transpose parameter
     if transpose:
@@ -1153,7 +1149,7 @@ def compute_initial_statistics(folder='outputs'):
             if planner_type == 'CBS':
                 dir_path = os.path.join(base_dir, f'../{folder}/cbs_path_loose')
             else:
-                dir_path = os.path.join(base_dir, f'../{folder}/path_loose')
+                dir_path = os.path.join(base_dir, f'../{folder}/rrt_path_loose')
                 
             try:
                 # Use the existing read_csv function to process the data
