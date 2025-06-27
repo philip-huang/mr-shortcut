@@ -87,11 +87,11 @@ To generate a comparison of makespan improvement for cbs-generated trajectories 
 If you find this repository useful for your research, kindly cite the following work
 
 ```
-@inproceedings{huang2025shortcut,
-              title = {Benchmarking Shortcutting Techniques for Multi-Robot Arm Motion Planning},
-              author = {Huang, Philip and Shaoul, Yorai and Li, Jiaoyang},
-              year = {2025},
-              info = {https://philip-huang.github.io/mr-shortcut/},
-              booktitle = {IEEE/RSJ International Conference on Intelligent Robots and Systems},
-            }
+@misc{Huang2025BenchmarkingShortcut,
+        author    = {Philip Huang and Yorai Shaoul and Jiaoyang Li},
+        title     = {Benchmarking Shortcutting Techniques for Multi-Robot Arm Motion Planning},
+        year      = {2025},
+        howpublished = {\url{https://your-github-username.github.io/mr-shortcut/}},
+        note      = {Website}
+      }
 ```
