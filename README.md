@@ -5,7 +5,11 @@
 
 This is the code repository for our paper "Benchmarking Shortcutting Techniques for Multi-Robot Arm Motion Planning".
 
-_Note that this repo is still currently being updated with bug fixes and cleaned-up_
+<div>
+<a href="https://github.com/philip-huang/mr-shortcut"><img src="https://img.shields.io/badge/Project_Page-Website-green?logo=googlechrome&logoColor=white" alt="Project Page" height=22px></a>
+<a href="https://arxiv.org/abs/2508.05027" target="_blank"><img src=https://img.shields.io/badge/ArXiv-Paper-b5212f.svg?logo=arxiv alt="ArXiv" height=22px></a>
+</div>
+
 ## Installation
 Build the docker image and run it inside docker
 ```
@@ -87,11 +91,10 @@ To generate a comparison of makespan improvement for cbs-generated trajectories 
 If you find this repository useful for your research, kindly cite the following work
 
 ```
-@misc{Huang2025BenchmarkingShortcut,
-        author    = {Philip Huang and Yorai Shaoul and Jiaoyang Li},
+@inproceedings{Huang2025BenchmarkingShortcut,
         title     = {Benchmarking Shortcutting Techniques for Multi-Robot Arm Motion Planning},
+        author    = {Huang, Philip and Shaoul, Yorai and Li, Jiaoyang},
         year      = {2025},
-        howpublished = {\url{https://philip-huang.github.io/mr-shortcut/}},
-        note      = {Website}
+        booktitle = {IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)}
       }
 ```
