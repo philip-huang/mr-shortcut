@@ -3,12 +3,12 @@
 [![Docker Build and Test](https://github.com/philip-huang/mr-shortcut/workflows/Docker%20Build%20and%20Test/badge.svg)](https://github.com/philip-huang/mr-shortcut/actions)
 [![GitHub Pages](https://github.com/philip-huang/mr-shortcut/workflows/Deploy%20Jekyll%20with%20GitHub%20Pages%20dependencies%20preinstalled/badge.svg)](https://github.com/philip-huang/mr-shortcut/actions)
 
-This is the code repository for our paper "Benchmarking Shortcutting Techniques for Multi-Robot Arm Motion Planning".
-
 <div>
-<a href="https://github.com/philip-huang/mr-shortcut"><img src="https://img.shields.io/badge/Project_Page-Website-green?logo=googlechrome&logoColor=white" alt="Project Page" height=22px></a>
+<a href="https://philip-huang.github.io/mr-shortcut"><img src="https://img.shields.io/badge/Project_Page-Website-green?logo=googlechrome&logoColor=white" alt="Project Page" height=22px></a>
 <a href="https://arxiv.org/abs/2508.05027" target="_blank"><img src=https://img.shields.io/badge/ArXiv-Paper-b5212f.svg?logo=arxiv alt="ArXiv" height=22px></a>
 </div>
+
+This is the repository for our paper "Benchmarking Shortcutting Techniques for Multi-Robot Arm Motion Planning".
 
 ## Installation
 Build the docker image and run it inside docker
