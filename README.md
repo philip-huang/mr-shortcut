@@ -10,6 +10,11 @@
 
 This is the repository for our paper "Benchmarking Shortcutting Techniques for Multi-Robot Arm Motion Planning".
 
+### Sneak Peek: 10× Faster Multi-Robot Shortcutting
+<img src="docs/resources/new-result.png" alt="Visualization of upcoming fast shortcutting pipeline" width="100%">
+
+Our upcoming fast collision checker sets a new bar, delivering a real-time multi-robot-arm motion shortcutter with 10× gains over the strongest existing pipelines. Full paper and code release coming soon—stay tuned!
+
 ## Installation
 Build the docker image and run it inside docker
 ```
